@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dbyz.wechat.app.dao.AppDao">
+	<insert id="saveRequestXml" parameterType="java.lang.String">
+		INSERT INTO
+		wc_request_xml(content,createTime)
+		VALUES(#{requestXml},now());
+	</insert>
+
+	<insert id="saveResponseXml" parameterType="java.lang.String">
+		INSERT INTO
+		wc_response_xml(content,createTime)
+		VALUES(#{responseXml},now());
+	</insert>
+</mapper>

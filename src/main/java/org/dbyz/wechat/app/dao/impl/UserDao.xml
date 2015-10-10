@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dbyz.wechat.app.dao.UserDao">
+	<select id="getUser" parameterType="java.lang.Long"
+		resultType="org.dbyz.wechat.app.entity.User">
+		select * from wc_user where id = #{id}
+	</select>
+
+	<select id="getByOpenId" parameterType="java.lang.String"
+		resultType="org.dbyz.wechat.app.entity.User">
+		select * from wc_user where openId = #{openId}
+	</select>
+
+	<update id="bind" parameterType="java.util.HashMap">
+		update wc_user set openId = #{openId} and bindTime = now()
+		where name = #{name} and phone=#{phone};
+	</update>
+
+	<update id="unBind" parameterType="java.util.HashMap">
+		update wc_user set openId = null and bindTime = now()
+		where
+		openId = #{openId};
+	</update>
+
+</mapper>
