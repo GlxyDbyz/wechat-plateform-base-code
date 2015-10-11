@@ -1,5 +1,6 @@
 package org.dbyz.wechat.app.controller;
 
+import static org.apache.commons.codec.digest.DigestUtils.shaHex;
 import static org.dbyz.wechat.app.util.ConfigUtil.getString;
 import static org.dbyz.wechat.app.util.JaxbUtil.bean2Xml;
 import static org.dbyz.wechat.app.util.JaxbUtil.xml2Bean;
@@ -24,7 +25,6 @@ import org.dbyz.wechat.app.entity.Response;
 import org.dbyz.wechat.app.entity.User;
 import org.dbyz.wechat.app.service.AppService;
 import org.dbyz.wechat.app.service.UserService;
-import org.dbyz.wechat.app.util.SHA1;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -234,7 +234,7 @@ public class AppController {
 		for (String s : list) {
 			encryptStr += s;
 		}
-		String encrypt = SHA1.hex_sha1(encryptStr);
+		String encrypt = shaHex(encryptStr);
 		if (encrypt.equals(request.getParameter("signature"))) {
 			log.debug("weixin URL is validate");
 			responseText(response, request.getParameter("echostr"));
