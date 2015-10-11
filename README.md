@@ -10,7 +10,7 @@ wechat-plateform-base-code
 `code:`AppUtil.java
 <br>
 ## 二、后台管理主要功能-sys模块（待开发）
-#### 系统管理
-#### 微信用户管理
-#### 微信菜单管理<br><br>
+#### 1.系统管理
+#### 2.微信用户管理
+#### 3.微信菜单管理<br><br>
 ![me](https://avatars2.githubusercontent.com/u/6849536?v=3&s=64 "me")
