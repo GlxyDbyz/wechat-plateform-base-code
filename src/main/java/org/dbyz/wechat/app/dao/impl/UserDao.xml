@@ -12,7 +12,7 @@
 	</select>
 
 	<update id="bind" parameterType="java.util.HashMap">
-		update wc_user set openId = #{openId} and bindTime = now()
+		update wc_user set openId = #{openId} , bindTime = now()
 		where name = #{name} and phone=#{phone};
 	</update>
 
