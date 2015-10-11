@@ -1,6 +1,6 @@
 wechat-plateform-base-code
 ====
-自己按照微信公众平API开发的微信公众平台后台`（Java版本）`<br><br>
+自己按照微信公众平API开发的微信公众平台后台`（Spring+SpringMVC+MyBatis+Durid）`<br><br>
 ## 一、前台主要功能-app模块（待完善）
 #### 1.微信接入 & 被动消息记录和回复
 `url`:http://[host]/[path]/app
