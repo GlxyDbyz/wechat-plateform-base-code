@@ -1,6 +1,7 @@
 package org.dbyz.wechat.app.util;
 
 import org.dbyz.wechat.app.entity.CustomMsg;
+import org.dbyz.wechat.app.entity.CustomMsg.CustomMsgType;
 import org.dbyz.wechat.app.entity.CustomMsg.article;
 import org.dbyz.wechat.app.entity.CustomMsg.news;
 import org.dbyz.wechat.app.entity.ErrCode;
@@ -8,7 +9,6 @@ import org.dbyz.wechat.app.entity.Menu;
 import org.dbyz.wechat.app.entity.Menu.Button;
 import org.dbyz.wechat.app.entity.Menu.MenuType;
 import org.dbyz.wechat.app.entity.Menu.SubButton;
-import org.dbyz.wechat.app.enum_.CustomMsgType;
 import org.junit.Test;
 
 public class JsonUtilTest {

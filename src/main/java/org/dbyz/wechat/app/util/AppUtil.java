@@ -15,10 +15,10 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.dbyz.wechat.app.entity.AccessToken;
 import org.dbyz.wechat.app.entity.CustomMsg;
 import org.dbyz.wechat.app.entity.ErrCode;
+import org.dbyz.wechat.app.entity.ErrCode.ErrorCodeType;
 import org.dbyz.wechat.app.entity.Menu;
 import org.dbyz.wechat.app.entity.Oauth2Token;
 import org.dbyz.wechat.app.entity.TemplateMsg;
-import org.dbyz.wechat.app.enum_.ErrorCodeType;
 
 /**
  * 微信接口工具

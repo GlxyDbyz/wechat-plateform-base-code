@@ -2,8 +2,23 @@ package org.dbyz.wechat.app.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * 菜单实体类
+ *
+ * @ClassName: Menu
+ * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+ * @version: V1.0
+ * 
+ *           1、自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。
+ *           2、一级菜单最多4个汉字，二级菜单最多7个汉字，多出来的部分将会以“...”代替。
+ *           3、创建自定义菜单后，由于微信客户端缓存，需要24小时微信客户端才会展现出来。
+ *           测试时可以尝试取消关注公众账号后再次关注，则可以看到创建后的效果。
+ */
 @XmlRootElement
 public class Menu {
+	/**
+	 * 一级菜单数组
+	 */
 	private Button[] button;
 
 	public Menu() {
@@ -23,9 +38,38 @@ public class Menu {
 		this.button = button;
 	}
 
+	/**
+	 * 一级菜单实体类
+	 *
+	 * @ClassName: Button
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static class Button {
+		/**
+		 * 一级菜单名称
+		 */
 		private String name;
+		/**
+		 * 菜单类型
+		 */
+		private String type;
+		/**
+		 * click菜单的key
+		 */
+		private String key;
+		/**
+		 * view 菜单的url
+		 */
+		private String url;
+		/**
+		 * media_id类型和view_limited类型
+		 */
+		private String media_id;
 
+		/**
+		 * 二级菜单数组
+		 */
 		private SubButton[] sub_button;
 
 		public Button() {
@@ -53,17 +97,71 @@ public class Menu {
 		public void setSub_button(SubButton[] sub_button) {
 			this.sub_button = sub_button;
 		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public String getKey() {
+			return key;
+		}
+
+		public void setKey(String key) {
+			this.key = key;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public String getMedia_id() {
+			return media_id;
+		}
+
+		public void setMedia_id(String media_id) {
+			this.media_id = media_id;
+		}
+
 	}
 
+	/**
+	 * 二级菜单实体类
+	 *
+	 * @ClassName: SubButton
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static class SubButton {
-		private String type;
+		/**
+		 * 二级菜单名称
+		 */
 		private String name;
+		/**
+		 * 菜单类型
+		 */
+		private String type;
+		/**
+		 * click菜单的key
+		 */
 		private String key;
+		/**
+		 * view 菜单的url
+		 */
 		private String url;
+		/**
+		 * media_id类型和view_limited类型
+		 */
 		private String media_id;
-		private String[] sub_button = { };
 
-		public SubButton( String name, MenuType type,String key, String url,
+		public SubButton(String name, MenuType type, String key, String url,
 				String media_id) {
 			super();
 			this.type = type.getName();
@@ -116,17 +214,15 @@ public class Menu {
 		public void setMedia_id(String media_id) {
 			this.media_id = media_id;
 		}
-
-		public String[] getSub_button() {
-			return sub_button;
-		}
-
-		public void setSub_button(String[] sub_button) {
-			this.sub_button = sub_button;
-		}
-
 	}
 
+	/**
+	 * 菜单类型
+	 *
+	 * @ClassName: MenuType
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static enum MenuType {
 		/**
 		 * 点击推事件
