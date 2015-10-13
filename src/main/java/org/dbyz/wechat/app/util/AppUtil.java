@@ -15,6 +15,7 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.dbyz.wechat.app.entity.AccessToken;
 import org.dbyz.wechat.app.entity.CustomMsg;
 import org.dbyz.wechat.app.entity.ErrCode;
+import org.dbyz.wechat.app.entity.Menu;
 import org.dbyz.wechat.app.entity.Oauth2Token;
 import org.dbyz.wechat.app.entity.TemplateMsg;
 import org.dbyz.wechat.app.enum_.ErrorCodeType;
@@ -49,7 +50,7 @@ public class AppUtil {
 							ConfigUtil.getString("AppSecret"));
 			HttpClient client = new HttpClient();
 			GetMethod getMethod = new GetMethod(urlStr);
-			
+
 			try {
 				client.executeMethod(getMethod);
 				if (getMethod.getStatusCode() == HttpStatus.SC_OK) {
@@ -93,8 +94,7 @@ public class AppUtil {
 			client.executeMethod(getMethod);
 			if (getMethod.getStatusCode() == HttpStatus.SC_OK) {
 				String json = getMethod.getResponseBodyAsString();
-				Oauth2Token oauth2Token = jsonToObject(json,
-						Oauth2Token.class);
+				Oauth2Token oauth2Token = jsonToObject(json, Oauth2Token.class);
 				return oauth2Token.getOpenid();
 			}
 
@@ -127,7 +127,7 @@ public class AppUtil {
 
 		try {
 			RequestEntity requestEntity = new StringRequestEntity(json,
-					"application/json", "utf-8");
+					"application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			client.executeMethod(postMethod);
 			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
@@ -170,7 +170,7 @@ public class AppUtil {
 
 		try {
 			RequestEntity requestEntity = new StringRequestEntity(json,
-					"application/json", "utf-8");
+					"application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			client.executeMethod(postMethod);
 			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
@@ -211,7 +211,7 @@ public class AppUtil {
 
 		try {
 			RequestEntity requestEntity = new StringRequestEntity(json,
-					"application/json", "utf-8");
+					"application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			client.executeMethod(postMethod);
 			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
@@ -251,7 +251,7 @@ public class AppUtil {
 
 		try {
 			RequestEntity requestEntity = new StringRequestEntity(
-					objectToJson(msg), "application/json", "utf-8");
+					objectToJson(msg), "application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			client.executeMethod(postMethod);
 			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
@@ -301,5 +301,72 @@ public class AppUtil {
 		} finally {
 			getMethod.releaseConnection();
 		}
+	}
+
+	/**
+	 * 创建菜单
+	 * 
+	 * @Title: createMenu
+	 * @param @param menu
+	 * @param @return
+	 * @return: Boolean
+	 * @since V1.0
+	 */
+	public static Boolean createMenu(Menu menu) {
+		String urlStr = String
+				.format("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s",
+						getAccessToken());
+		HttpClient client = new HttpClient();
+		PostMethod postMethod = new PostMethod(urlStr);
+
+		try {
+			RequestEntity requestEntity = new StringRequestEntity(
+					objectToJson(menu), "application/json", "UTF-8");
+			postMethod.setRequestEntity(requestEntity);
+			client.executeMethod(postMethod);
+			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
+				String json = postMethod.getResponseBodyAsString();
+				ErrCode err = jsonToObject(json, ErrCode.class);
+				if (ErrorCodeType.ok.getErrcode().equals(err.getErrcode())) {
+					return true;
+				}
+			}
+		} catch (HttpException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	/**
+	 * 获取当前菜单JSON
+	 * 
+	 * @Title: getMenu
+	 * @param @return
+	 * @return: String
+	 * @since V1.0
+	 */
+	public static String getMenu() {
+		String urlStr = String.format(
+				"https://api.weixin.qq.com/cgi-bin/menu/get?access_token=%s",
+				getAccessToken());
+		HttpClient client = new HttpClient();
+		GetMethod method = new GetMethod(urlStr);
+		try {
+			client.executeMethod(method);
+			if (method.getStatusCode() == HttpStatus.SC_OK) {
+				String json = new String(method.getResponseBodyAsString()
+						.getBytes("ISO-8859-1"), "UTF-8");
+				return json;
+			}
+		} catch (HttpException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

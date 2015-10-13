@@ -1,7 +1,14 @@
 package org.dbyz.wechat.app.util;
 
 import org.dbyz.wechat.app.entity.CustomMsg;
+import org.dbyz.wechat.app.entity.Menu;
+import org.dbyz.wechat.app.entity.CustomMsg.article;
+import org.dbyz.wechat.app.entity.CustomMsg.news;
+import org.dbyz.wechat.app.entity.CustomMsg.text;
 import org.dbyz.wechat.app.entity.TemplateMsg;
+import org.dbyz.wechat.app.entity.Menu.Button;
+import org.dbyz.wechat.app.entity.Menu.MenuType;
+import org.dbyz.wechat.app.entity.Menu.SubButton;
 import org.dbyz.wechat.app.entity.TemplateMsg.Data;
 import org.dbyz.wechat.app.entity.TemplateMsg.ValueAndColor;
 import org.dbyz.wechat.app.enum_.CustomMsgType;
@@ -18,7 +25,7 @@ public class AppUtilTest {
 	public void testCustomMsg1() {
 		CustomMsg msg = new CustomMsg("oVucYt94aTif_E-2-uq6tAgUDpvc",
 				CustomMsgType.TEXT.getMsgtype());
-		msg.setText(msg.new text("您好!"));
+		msg.setText(new text("您好!"));
 		AppUtil.sendCustomerMsg(msg);
 	}
 
@@ -27,15 +34,15 @@ public class AppUtilTest {
 		CustomMsg msg = new CustomMsg("oVucYt94aTif_E-2-uq6tAgUDpvc",
 				CustomMsgType.NEWS.getMsgtype());
 		CustomMsg.article[] articles = {
-				msg.new article(
+				new article(
 						"微信开发客服消息测试",
 						"http://mp.weixin.qq.com/wiki/1/70a29afed17f56d537c833f89be979c9.html",
 						"http://avatar.csdn.net/2/3/5/1_qq1130141391.jpg"),
-				msg.new article(
+				new article(
 						"你想知道的微信开发",
 						"http://mp.weixin.qq.com/wiki/1/70a29afed17f56d537c833f89be979c9.html",
 						"http://avatar.csdn.net/2/3/5/1_qq1130141391.jpg") };
-		CustomMsg.news news = msg.new news(articles);
+		CustomMsg.news news = new news(articles);
 		msg.setNews(news);
 		AppUtil.sendCustomerMsg(msg);
 	}
@@ -49,12 +56,9 @@ public class AppUtilTest {
 	@Test
 	public void testTemplateMsg() {
 		Data data = TemplateMsg.createData();
-		ValueAndColor first = TemplateMsg.createValueAndColor("你的一条请假申请通过了",
-				"#173177");
-		ValueAndColor second = TemplateMsg.createValueAndColor(
-				"2015-10-09 08:12:21", "#173177");
-		ValueAndColor third = TemplateMsg.createValueAndColor("王思贵总经理",
-				"#173177");
+		ValueAndColor first = TemplateMsg.createValueAndColor("你的一条请假申请通过了", "#173177");
+		ValueAndColor second = TemplateMsg.createValueAndColor( "2015-10-09 08:12:21", "#173177");
+		ValueAndColor third = TemplateMsg.createValueAndColor("王思贵总经理", "#173177");
 		data.setFirst(first);
 		data.setSecond(second);
 		data.setThird(third);
@@ -65,5 +69,41 @@ public class AppUtilTest {
 
 		AppUtil.sendTemplateMsg(t);
 	}
-
+	
+	@Test
+	public void testCreateMenu() {
+		Menu m = new Menu();
+		
+		Button b1 = new Button();
+		b1.setName("考勤相关");
+		SubButton b1s1 = new SubButton("员工信息绑定",MenuType.click, "user_bind", null, null);
+		SubButton b1s2 = new SubButton("员工考勤",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/attendance/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		SubButton b1s3 = new SubButton("请假调休",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/leave/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		SubButton[] subButton1 = {b1s1,b1s2,b1s3};
+		b1.setSub_button(subButton1);
+		
+		Button b2 = new Button();
+		b2.setName("财务相关");
+		SubButton b2s1 = new SubButton("物品申购",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/purchase/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		SubButton b2s2 = new SubButton("财务申请",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/financial/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		SubButton[] subButton2 = {b2s1,b2s2};
+		b2.setSub_button(subButton2);
+		
+		Button b3 = new Button();
+		b3.setName("公共管理");
+		SubButton b3s1 = new SubButton("公告",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/notice/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		SubButton b3s2 = new SubButton("会议",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/meeting/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		SubButton[] subButton3 = {b3s1,b3s2};
+		b3.setSub_button(subButton3);
+		
+		Button[] button = {b1,b2,b3};
+		m.setButton(button);
+		AppUtil.createMenu(m);
+	}
+	
+	@Test
+	public void testgetMenu() {
+		System.out.println(AppUtil.getMenu());
+	}
+	
 }

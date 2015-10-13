@@ -12,14 +12,16 @@
 	</select>
 
 	<update id="bind" parameterType="java.util.HashMap">
-		update wc_user set openId = #{openId} , bindTime = now()
+		update wc_user set openId =
+		#{openId} , bindTime = now()
 		where name = #{name} and phone=#{phone};
 	</update>
 
 	<update id="unBind" parameterType="java.util.HashMap">
-		update wc_user set openId = null and bindTime = now()
-		where
-		openId = #{openId};
+		update wc_user 
+		set openId = null 
+		,   bindTime = now()
+		where openId = #{openId};
 	</update>
 
 </mapper>

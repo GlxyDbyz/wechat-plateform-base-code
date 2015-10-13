@@ -87,7 +87,7 @@ public class CustomMsg {
 		this.msgtype = msgtype;
 	}
 
-	public class text {
+	public static class text {
 		private String content;
 
 		public text(String content) {
@@ -104,7 +104,7 @@ public class CustomMsg {
 		}
 	}
 
-	public class image {
+	public static class image {
 		private String media_id;
 
 		public image(String media_id) {
@@ -122,7 +122,7 @@ public class CustomMsg {
 
 	}
 
-	public class voice {
+	public static class voice {
 		private String media_id;
 
 		public voice(String media_id) {
@@ -140,7 +140,7 @@ public class CustomMsg {
 
 	}
 
-	public class video {
+	public static class video {
 		private String media_id;
 		private String thumb_media_id;
 		private String title;
@@ -189,7 +189,7 @@ public class CustomMsg {
 
 	}
 
-	public class music {
+	public static class music {
 		private String title;
 		private String description;
 		private String musicurl;
@@ -247,7 +247,7 @@ public class CustomMsg {
 		}
 	}
 
-	public class news {
+	public static class news {
 		private article[] articles;
 
 		public news(article[] articles) {
@@ -265,7 +265,7 @@ public class CustomMsg {
 
 	}
 
-	public class article {
+	public static class article {
 		private String title;
 		private String url;
 		private String picurl;
