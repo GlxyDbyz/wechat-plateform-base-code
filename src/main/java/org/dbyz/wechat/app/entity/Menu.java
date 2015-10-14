@@ -70,98 +70,22 @@ public class Menu {
 		/**
 		 * 二级菜单数组
 		 */
-		private SubButton[] sub_button;
+		private Button[] sub_button;
 
 		public Button() {
 			super();
 		}
 
-		public Button(String name, SubButton[] sub_button) {
-			super();
-			this.name = name;
-			this.sub_button = sub_button;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public SubButton[] getSub_button() {
-			return sub_button;
-		}
-
-		public void setSub_button(SubButton[] sub_button) {
-			this.sub_button = sub_button;
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
-		}
-
-		public String getKey() {
-			return key;
-		}
-
-		public void setKey(String key) {
-			this.key = key;
-		}
-
-		public String getUrl() {
-			return url;
-		}
-
-		public void setUrl(String url) {
-			this.url = url;
-		}
-
-		public String getMedia_id() {
-			return media_id;
-		}
-
-		public void setMedia_id(String media_id) {
-			this.media_id = media_id;
-		}
-
-	}
-
-	/**
-	 * 二级菜单实体类
-	 *
-	 * @ClassName: SubButton
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
-	 * @version: V1.0
-	 */
-	public static class SubButton {
 		/**
-		 * 二级菜单名称
+		 * 二级菜单构造器/简单一级菜单构造器
+		 * 
+		 * @param name
+		 * @param type
+		 * @param key
+		 * @param url
+		 * @param media_id
 		 */
-		private String name;
-		/**
-		 * 菜单类型
-		 */
-		private String type;
-		/**
-		 * click菜单的key
-		 */
-		private String key;
-		/**
-		 * view 菜单的url
-		 */
-		private String url;
-		/**
-		 * media_id类型和view_limited类型
-		 */
-		private String media_id;
-
-		public SubButton(String name, MenuType type, String key, String url,
+		public Button(String name, MenuType type, String key, String url,
 				String media_id) {
 			super();
 			this.type = type.getName();
@@ -170,17 +94,17 @@ public class Menu {
 			this.url = url;
 			this.media_id = media_id;
 		}
-
-		public SubButton() {
+		
+		/**
+		 * 复杂一级菜单构造器
+		 * 
+		 * @param name
+		 * @param sub_button
+		 */
+		public Button(String name, Button[] sub_button) {
 			super();
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
+			this.name = name;
+			this.sub_button = sub_button;
 		}
 
 		public String getName() {
@@ -189,6 +113,22 @@ public class Menu {
 
 		public void setName(String name) {
 			this.name = name;
+		}
+
+		public Button[] getSub_button() {
+			return sub_button;
+		}
+
+		public void setSub_button(Button[] sub_button) {
+			this.sub_button = sub_button;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
 		}
 
 		public String getKey() {
@@ -214,6 +154,7 @@ public class Menu {
 		public void setMedia_id(String media_id) {
 			this.media_id = media_id;
 		}
+
 	}
 
 	/**

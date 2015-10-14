@@ -8,7 +8,6 @@ import org.dbyz.wechat.app.entity.ErrCode;
 import org.dbyz.wechat.app.entity.Menu;
 import org.dbyz.wechat.app.entity.Menu.Button;
 import org.dbyz.wechat.app.entity.Menu.MenuType;
-import org.dbyz.wechat.app.entity.Menu.SubButton;
 import org.junit.Test;
 
 public class JsonUtilTest {
@@ -30,32 +29,25 @@ public class JsonUtilTest {
 	
 	@Test
 	public void test2() {
-		Menu m = new Menu();
-		
-		Button b1 = new Button();
-		b1.setName("考勤相关");
-		SubButton b1s1 = new SubButton("员工信息绑定",MenuType.click, "user_bind", null, null);
-		SubButton b1s2 = new SubButton("员工考勤",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/attendance/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
-		SubButton b1s3 = new SubButton("请假调休",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/leave/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
-		SubButton[] subButton1 = {b1s1,b1s2,b1s3};
-		b1.setSub_button(subButton1);
-		
-		Button b2 = new Button();
-		b2.setName("财务相关");
-		SubButton b2s1 = new SubButton("物品申购",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/purchase/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
-		SubButton b2s2 = new SubButton("财务申请",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/financial/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
-		SubButton[] subButton2 = {b2s1,b2s2};
-		b2.setSub_button(subButton2);
-		
-		Button b3 = new Button();
-		b3.setName("公共管理");
-		SubButton b3s1 = new SubButton("公司公告",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/notice/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
-		SubButton b3s2 = new SubButton("会议安排",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/meeting/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
-		SubButton[] subButton3 = {b3s1,b3s2};
-		b3.setSub_button(subButton3);
+		Button b1s1 = new Button("员工信息绑定",MenuType.click, "user_bind", null, null);
+		Button b1s2 = new Button("员工考勤",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/attendance/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		Button b1s3 = new Button("请假调休",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/leave/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		Button[] subButton1 = {b1s1,b1s2,b1s3};
+		Button b1 = new Button("考勤相关",subButton1);
+
+		Button b2s1 = new Button("物品申购",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/purchase/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		Button b2s2 = new Button("财务申请",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/financial/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		Button[] subButton2 = {b2s1,b2s2};
+		Button b2 = new Button("财务相关",subButton2);
+
+		Button b3s1 = new Button("公司公告",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/notice/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		Button b3s2 = new Button("会议安排",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/meeting/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
+		Button[] subButton3 = {b3s1,b3s2};
+		Button b3 = new Button("公共管理",subButton3);
 		
 		Button[] button = {b1,b2,b3};
-		m.setButton(button);
+		Menu m = new Menu(button);
+		
 		System.out.println(JsonUtil.objectToJson(m));
 	}
 	
