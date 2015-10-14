@@ -1,12 +1,12 @@
-------------------------------�ı���Ϣ------------------------------------
+------------------------------文本消息------------------------------------
 <xml><ToUserName><![CDATA[gh_4d571******]]></ToUserName>
 <FromUserName><![CDATA[oVucYt94aTif_E-2******]]></FromUserName>
 <CreateTime>1444747129</CreateTime>
 <MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[��ð�]]></Content>
+<Content><![CDATA[你好啊]]></Content>
 <MsgId>6205141670259671217</MsgId>
 </xml>
-------------------------------ģ����Ϣ���ͳɹ�------------------------------------
+------------------------------模版消息发送成功------------------------------------
 <xml><ToUserName><![CDATA[gh_4d571******]]></ToUserName>
 <FromUserName><![CDATA[oVucYt94aTif_E-2******]]></FromUserName>
 <CreateTime>1444827554</CreateTime>
@@ -15,7 +15,7 @@
 <MsgID>214794622</MsgID>
 <Status><![CDATA[success]]></Status>
 </xml>
------------------------------����¼�---------------------------------------
+-----------------------------点击事件---------------------------------------
 <xml><ToUserName><![CDATA[gh_4d571******]]></ToUserName>
 <FromUserName><![CDATA[oVucYt94aTif_E-2******]]></FromUserName>
 <CreateTime>1444827651</CreateTime>
@@ -23,7 +23,7 @@
 <Event><![CDATA[CLICK]]></Event>
 <EventKey><![CDATA[user_bind]]></EventKey>
 </xml>
---------------------------------��ע��ȡ����ע--------------------------------------
+--------------------------------关注和取消关注--------------------------------------
 <xml><ToUserName><![CDATA[gh_4d571******]]></ToUserName>
 <FromUserName><![CDATA[oVucYt94aTif_E-2******]]></FromUserName>
 <CreateTime>1444833186</CreateTime>
@@ -39,7 +39,7 @@
 <Event><![CDATA[unsubscribe]]></Event>
 <EventKey><![CDATA[]]></EventKey>
 </xml>
-------------------------��ά��ɨ��----------------------------------------
+------------------------二维码扫描----------------------------------------
 <xml><ToUserName><![CDATA[gh_4d571******]]></ToUserName>
 <FromUserName><![CDATA[oVucYt94aTif_E-2******]]></FromUserName>
 <CreateTime>1444833768</CreateTime>
@@ -47,7 +47,7 @@
 <Event><![CDATA[scancode_push]]></Event>
 <EventKey><![CDATA[scancode_waitmsg]]></EventKey>
 <ScanCodeInfo><ScanType><![CDATA[qrcode]]></ScanType>
-<ScanResult><![CDATA[��˹��˹��]]></ScanResult>
+<ScanResult><![CDATA[阿斯达斯的]]></ScanResult>
 </ScanCodeInfo>
 </xml>
 
@@ -58,10 +58,10 @@
 <Event><![CDATA[scancode_waitmsg]]></Event>
 <EventKey><![CDATA[scancode_push]]></EventKey>
 <ScanCodeInfo><ScanType><![CDATA[qrcode]]></ScanType>
-<ScanResult><![CDATA[��˹��˹��]]></ScanResult>
+<ScanResult><![CDATA[阿斯达斯的]]></ScanResult>
 </ScanCodeInfo>
 </xml>
--------------------------����ɨ��------------------------------------
+-------------------------条码扫描------------------------------------
 <xml><ToUserName><![CDATA[gh_4d571******]]></ToUserName>
 <FromUserName><![CDATA[oVucYt94aTif_E-2******]]></FromUserName>
 <CreateTime>1444834092</CreateTime>
@@ -83,7 +83,7 @@
 <ScanResult><![CDATA[CODE_128,1005312275]]></ScanResult>
 </ScanCodeInfo>
 </xml>
---------------------------------���գ���event��ͼƬ��Ϣ��----------------------------------------------
+--------------------------------拍照（先event后图片消息）----------------------------------------------
 <xml><ToUserName><![CDATA[gh_4d571******]]></ToUserName>
 <FromUserName><![CDATA[oVucYt94aTif_E-2******]]></FromUserName>
 <CreateTime>1444834225</CreateTime>
@@ -107,7 +107,7 @@
 </xml>
 
 
---------------------------------ϵͳ��ᣨ��event��ͼƬ��Ϣ��--------------------------------------------
+--------------------------------系统相册（先event后图片消息）--------------------------------------------
 <xml><ToUserName><![CDATA[gh_4d571******]]></ToUserName>
 <FromUserName><![CDATA[oVucYt94aTif_E-2******]]></FromUserName>
 <CreateTime>1444834321</CreateTime>
@@ -130,7 +130,7 @@
 <MediaId><![CDATA[NW-Bs4Ysv8qskoY5BzL_pfG_gP8a6gpqlg_FF1XMRH9C642EN_HQB4kEuyX8LWGG]]></MediaId>
 </xml>
 
--------------------------------------ͼƬ��Ϣ-----------------------------------------
+-------------------------------------图片消息-----------------------------------------
 <xml><ToUserName><![CDATA[gh_4d571******]]></ToUserName>
 <FromUserName><![CDATA[oVucYt94aTif_E-2******]]></FromUserName>
 <CreateTime>1444835284</CreateTime>
