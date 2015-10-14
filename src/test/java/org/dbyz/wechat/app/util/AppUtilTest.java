@@ -70,7 +70,7 @@ public class AppUtilTest {
 	}
 	
 	@Test
-	public void testCreateMenu() {
+	public void testCreateMenu1() {
 		
 		/**
 		 * 一级菜单1
@@ -101,6 +101,48 @@ public class AppUtilTest {
 		 * 一级菜单数组
 		 */
 		Button[] button = {b1,b2,b3};
+		
+		/**
+		 * 整个menu
+		 */
+		Menu menu = new Menu(button);
+		
+		AppUtil.createMenu(menu);
+	}
+	
+	@Test
+	public void testCreateMenu2() {
+		
+		/**
+		 * 一级菜单1
+		 */
+		Button b1s1 = new Button("扫码带提示",MenuType.scancode_push, "scancode_push", null, null);
+		Button b1s2 = new Button("扫码推事件",MenuType.scancode_waitmsg, "scancode_waitmsg", null, null);
+		Button[] subButton1 = {b1s1,b1s2};
+		Button b1 = new Button("扫码",subButton1);
+
+		/**
+		 * 一级菜单2
+		 */
+		Button b2s1 = new Button("系统拍照",MenuType.pic_sysphoto, "pic_sysphoto", null, null);
+		Button b2s2 = new Button("拍照或相册",MenuType.pic_photo_or_album, "pic_photo_or_album", null, null);
+		Button b2s3 = new Button("微信相册",MenuType.pic_weixin, "pic_weixin", null, null);
+		Button[] subButton2 = {b2s1,b2s2,b2s3};
+		Button b2 = new Button("发图",subButton2);
+
+		/**
+		 * 一级菜单3
+		 */
+		Button b3s1 = new Button("发送位置",MenuType.location_select, "location_select", null, null);
+		//Button b3s2 = new Button("图片",MenuType.media_id, null, null, "MEDIA_ID1");
+		//Button b3s3 = new Button("图文消息",MenuType.view_limited, null, null, "MEDIA_ID2");
+		//Button[] subButton3 = {b3s1,b3s2,b3s3};
+		//Button b3 = new Button("其他",subButton3);
+		
+		/**
+		 * 一级菜单数组
+		 */
+		Button[] button = {b1,b2,b3s1};
 		
 		/**
 		 * 整个menu
