@@ -10,8 +10,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import org.dbyz.wechat.app.entity.Request;
-
 /**
  * Xml 和 javabean 的 数据转换帮助类
  *
@@ -85,27 +83,5 @@ public class JaxbUtil {
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		T result = (T) unmarshaller.unmarshal(new URL(url));
 		return result;
-	}
-
-	/**
-	 * 测试一下
-	 * 
-	 * @Title: main
-	 * @Description:
-	 * @param @param args
-	 * @return void
-	 * @throws JAXBException
-	 */
-	public static void main(String[] args) throws JAXBException {
-		Request req = xml2Bean("<xml>"
-				+ "<ToUserName><![CDATA[toUser]]></ToUserName>"
-				+ "<FromUserName><![CDATA[fromUser]]></FromUserName>"
-				+ "<CreateTime>1348831860</CreateTime>"
-				+ "<MsgType><![CDATA[text]]></MsgType>"
-				+ "<Content><![CDATA[this is a test]]></Content>"
-				+ "<MsgId>1234567890123456</MsgId>" + "</xml>", Request.class);
-		System.out.println(req);
-		// 为空的属性不生成XML
-		System.out.println(bean2Xml(req, "utf-8"));
 	}
 }
