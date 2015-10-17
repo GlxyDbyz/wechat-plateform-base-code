@@ -128,6 +128,7 @@ public class RequestMsg {
 	// -------7. 事件推送-------------------
 	/**
 	 * 事件名称
+	 * @see EventType
 	 */
 	@XmlElement(name = "Event", required = false)
 	private String event;
@@ -156,7 +157,14 @@ public class RequestMsg {
 	 */
 	@XmlElement(name = "Precision", required = false)
 	private String precision;
-
+	/**
+	 * 模版消息发送是否成功/其他消息不返还是否成功 success;failed:user block;failed: system failed
+	 */
+	@XmlElement(name = "Status", required = false)
+	private String status;
+	/**
+	 * 扫描二维码或者条码的结果
+	 */
 	@XmlElementWrapper(name = "ScanCodeInfo", required = false)
 	@XmlElements({ @XmlElement(name = "ScanResult"),
 			@XmlElement(name = "ScanType") })
@@ -175,7 +183,36 @@ public class RequestMsg {
 				+ ", url=" + url + ", event=" + event + ", eventKey="
 				+ eventKey + ", ticket=" + ticket + ", latitude=" + latitude
 				+ ", longitude=" + longitude + ", precision=" + precision
-				+ ", scanCodeInfo=" + scanCodeInfo + "]";
+				+ ", status=" + status + ", scanCodeInfo=" + scanCodeInfo
+				+ ", getStatus()=" + getStatus() + ", getToUserName()="
+				+ getToUserName() + ", getFromUserName()=" + getFromUserName()
+				+ ", getCreateTime()=" + getCreateTime() + ", getMsgType()="
+				+ getMsgType() + ", getMsgId()=" + getMsgId()
+				+ ", getContent()=" + getContent() + ", getPicUrl()="
+				+ getPicUrl() + ", getMediaId()=" + getMediaId()
+				+ ", getFormat()=" + getFormat() + ", getRecognition()="
+				+ getRecognition() + ", getThumbMediaId()=" + getThumbMediaId()
+				+ ", getLocation_X()=" + getLocation_X() + ", getLocation_Y()="
+				+ getLocation_Y() + ", getScale()=" + getScale()
+				+ ", getLabel()=" + getLabel() + ", getTitle()=" + getTitle()
+				+ ", getDescription()=" + getDescription() + ", getUrl()="
+				+ getUrl() + ", getEvent()=" + getEvent() + ", getEventKey()="
+				+ getEventKey() + ", getTicket()=" + getTicket()
+				+ ", getLatitude()=" + getLatitude() + ", getLongitude()="
+				+ getLongitude() + ", getPrecision()=" + getPrecision()
+				+ ", getScanCodeInfo()=" + getScanCodeInfo()
+				+ ", getScanType()=" + getScanType() + ", getScanResult()="
+				+ getScanResult() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getToUserName() {
@@ -381,12 +418,11 @@ public class RequestMsg {
 	public String getScanType() {
 		return scanCodeInfo.get(0);
 	}
-	
+
 	public String getScanResult() {
 		return scanCodeInfo.get(1);
 	}
 
-	
 	public static enum RequestMsgType {
 		/**
 		 * 文本消息
@@ -441,7 +477,7 @@ public class RequestMsg {
 		 */
 		UNSUBSCRIBE("unsubscribe"),
 		/**
-		 * 用户已关注时的扫描事件推送
+		 * 用户已关注后扫描公众号二维码的事件推送(经实测发现未发送此类型的消息)
 		 */
 		SCAN("SCAN"),
 		/**
@@ -449,7 +485,7 @@ public class RequestMsg {
 		 */
 		LOCATION("LOCATION"),
 		/**
-		 * 自定义菜单事件
+		 * 自定义菜单事件CLICk
 		 */
 		CLICK("CLICK"),
 		/**
@@ -461,7 +497,7 @@ public class RequestMsg {
 		 */
 		SCANCODE_PUSH("scancode_push"),
 		/**
-		 * 扫描二维码先让用户查看再推送事件
+		 * 扫描二维码先让用户查看并推送事件
 		 */
 		SCANCODE_WAITMSG("scancode_waitmsg"),
 		/**
@@ -472,7 +508,10 @@ public class RequestMsg {
 		 * 相册发图事件
 		 */
 		PIC_WEIXIN("pic_weixin"),
-		;
+		/**
+		 * 模版消息发送成功（接受是否成功不区分,Status进行区分）
+		 */
+		TEMPLATESENDJOBFINISH("TEMPLATESENDJOBFINISH"), ;
 		private String name;
 
 		private EventType(String name) {
