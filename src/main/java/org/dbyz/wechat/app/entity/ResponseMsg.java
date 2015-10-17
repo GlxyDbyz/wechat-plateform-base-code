@@ -19,50 +19,62 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "xml")
-public class Response {
-	// 回复目标微信标识
+public class ResponseMsg {
+	/**
+	 * 用户微信标识
+	 */
 	@XmlElement(name = "ToUserName")
 	private String toUserName;
-	// 公众号微信标识
+	/**
+	 * 公众号微信标识
+	 */
 	@XmlElement(name = "FromUserName")
 	private String platformUserName;
-	// 消息创建时间（整形）
+	/**
+	 * 消息创建时间（整形）
+	 */
 	@XmlElement(name = "CreateTime")
-	private String createTime;
-	// 消息类型
+	private Long createTime;
+	/**
+	 * 消息类型
+	 */
 	@XmlElement(name = "MsgType")
 	private String msgType;
-	// 文本消息的内容
+	/**
+	 * 文本消息的内容
+	 */
 	@XmlElement(name = "Content", required = false)
 	private String content;
 	
-	// 附加的字段
+	/**
+	 * 附加的字段
+	 */
 	@XmlElement(name = "FuncFlag", required = false)
 	private Integer funcFlag;
 	@XmlElement(name = "ArticleCount", required = false)
 	private Integer articleCount;
 	
-	// 图文消息
+	/**
+	 * 图文消息
+	 */
 	@XmlElementWrapper(name = "Articles")
 	@XmlElements(@XmlElement(name = "item", required = false))
 	private List<ArticleItem> items;
 
 	private Integer id;
 
-	public Response() {
-
+	public ResponseMsg() {
+		super();
 	}
 
-	public Response(String toUserName, String platformUserName,
-			String createTime) {
+	public ResponseMsg(String toUserName, String platformUserName) {
 		this.toUserName = toUserName;
 		this.platformUserName = platformUserName;
-		this.createTime = createTime;
+		this.createTime = System.currentTimeMillis();
 	}
 
-	public Response(Request request) {
-		this(request.getFromUserName(), request.getToUserName(), request
-				.getCreateTime());
+	public ResponseMsg(RequestMsg request) {
+		this(request.getFromUserName(), request.getToUserName());
 	}
 
 	public Integer getId() {
@@ -89,11 +101,11 @@ public class Response {
 		this.platformUserName = platformUserName;
 	}
 
-	public String getCreateTime() {
+	public Long getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
 

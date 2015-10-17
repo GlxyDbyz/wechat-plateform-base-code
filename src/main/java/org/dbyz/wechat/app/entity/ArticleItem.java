@@ -9,23 +9,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 单条图文消息
  *
  * @ClassName: ArticleItem
- * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a> 
+ * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
  * @version: V1.0
  */
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "items")
 public class ArticleItem {
-	// 标题文字
+	/**
+	 * 标题文字
+	 */
 	@XmlElement(name = "Title")
 	private String title;
-	// 说明文字
+	/**
+	 * 说明文字
+	 */
 	@XmlElement(name = "Description")
 	private String description;
-	// 图片地址
+	/**
+	 * 图片地址
+	 */
 	@XmlElement(name = "PicUrl")
 	private String picUrl;
-	// 连接地址
+	/**
+	 * 链接地址
+	 */
 	@XmlElement(name = "Url")
 	private String url;
 
@@ -73,7 +81,6 @@ public class ArticleItem {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "ArticleItem [title=" + title + ", description=" + description
 				+ ", picUrl=" + picUrl + ", url=" + url + "]";
 	}

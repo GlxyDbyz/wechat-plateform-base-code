@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 
-import org.dbyz.wechat.app.entity.Request;
-import org.dbyz.wechat.app.entity.Response;
+import org.dbyz.wechat.app.entity.RequestMsg;
+import org.dbyz.wechat.app.entity.ResponseMsg;
 import org.dbyz.wechat.app.entity.User;
 import org.dbyz.wechat.app.service.AppService;
 import org.dbyz.wechat.app.service.UserService;
@@ -72,7 +72,7 @@ public class AppController {
 		}
 
 		// 读取微信发来的消息
-		Request request = getRequestMsg(req);
+		RequestMsg request = getRequestMsg(req);
 		// 生成并发送回复消息
 		responseText(resp, generateResponseXml(request));
 
@@ -87,12 +87,12 @@ public class AppController {
 	 * @return: Response
 	 * @since V1.0
 	 */
-	private String generateResponseXml(Request request) {
+	private String generateResponseXml(RequestMsg request) {
 		if (request == null)
 			return null;
 
 		// 用 request 作为 response 基础数据
-		Response response = new Response(request);
+		ResponseMsg response = new ResponseMsg(request);
 		// 回复消息（全部为文本消息）
 		String replyText = "";
 		String openId = request.getFromUserName();
@@ -143,7 +143,7 @@ public class AppController {
 		return responseXml;
 	}
 
-	private String textRequest(Request request) {
+	private String textRequest(RequestMsg request) {
 		String replyText;
 		String content = request.getContent();
 
@@ -179,8 +179,8 @@ public class AppController {
 	 * @param @throws UnsupportedEncodingException
 	 * @return Request
 	 */
-	private Request getRequestMsg(HttpServletRequest request) {
-		Request requestMsg = null;
+	private RequestMsg getRequestMsg(HttpServletRequest request) {
+		RequestMsg requestMsg = null;
 
 		// 1、设置0.5M的缓冲区域（普通的消息足够了,可适当放大如1M，考虑服务器的配置）
 		byte[] buffer = new byte[1024 * 512];
@@ -197,7 +197,7 @@ public class AppController {
 					String requestXml = new String(buffer, 0, length, "UTF-8");
 					appService.saveRequestXml(requestXml);
 					// 4、封装xml到JavaBean
-					requestMsg = xml2Bean(requestXml, Request.class);
+					requestMsg = xml2Bean(requestXml, RequestMsg.class);
 				}
 			}
 

@@ -1,7 +1,13 @@
 package org.dbyz.wechat.app.entity;
 
 public class ErrCode {
+	/**
+	 * 错误编码
+	 */
 	private String errcode;
+	/**
+	 * 错误消息
+	 */
 	private String errmsg;
 	/**
 	 * 获取模版消息时候会有此参数返回
@@ -33,7 +39,8 @@ public class ErrCode {
 	}
 
 	public static enum ErrorCodeType {
-		busy("-1"), ok("0");
+		busy("-1"),
+		ok("0");
 
 		private String errcode;
 
