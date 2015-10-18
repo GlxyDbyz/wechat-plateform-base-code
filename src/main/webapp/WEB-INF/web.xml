@@ -7,11 +7,11 @@
 
 	<error-page>
 		<error-code>404</error-code>
-		<location>/error.jsp</location>
+		<location>/error400.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/error.jsp</location>
+		<location>/error500.jsp</location>
 	</error-page>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
