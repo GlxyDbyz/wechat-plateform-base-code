@@ -42,8 +42,8 @@ public class OperationInterceptor extends HandlerInterceptorAdapter {
 		} else if (url.indexOf("/sys") != -1) {
 			// 后台
 			HttpSession sysSession = request.getSession(false);
-			if ((SysUser) sysSession.getAttribute(SYS_SESSION_USER) == null) {
-				response.sendRedirect(request.getContextPath() + "/error.jsp");
+			if (sysSession!=null && (SysUser) sysSession.getAttribute(SYS_SESSION_USER) == null) {
+				response.sendRedirect(request.getContextPath() + "/error400.jsp");
 				return false;
 			} else {
 				return true;
@@ -82,7 +82,7 @@ public class OperationInterceptor extends HandlerInterceptorAdapter {
 		} else { // 跳转提示页面
 			// request.getRequestDispatcher("/error.jsp").forward(request,
 			// response);
-			response.sendRedirect(request.getContextPath() + "/error.jsp");
+			response.sendRedirect(request.getContextPath() + "/error400.jsp");
 			return false;
 		}
 		return true;
