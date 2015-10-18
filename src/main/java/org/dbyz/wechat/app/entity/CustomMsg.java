@@ -8,8 +8,19 @@ package org.dbyz.wechat.app.entity;
  * @version: V1.0
  */
 public class CustomMsg {
+	/**
+	 * 发送的openId
+	 */
 	private String touser;
+	/**
+	 * 消息的类型
+	 * 
+	 * @see CustomMsgType
+	 */
 	private String msgtype;
+	/**
+	 * 以下四种只能有一种
+	 */
 	private text text;
 	private image image;
 	private voice voice;
@@ -87,6 +98,13 @@ public class CustomMsg {
 		this.msgtype = msgtype;
 	}
 
+	/**
+	 * 客服消息-文本消息
+	 *
+	 * @ClassName: text
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static class text {
 		private String content;
 
@@ -104,6 +122,13 @@ public class CustomMsg {
 		}
 	}
 
+	/**
+	 * 客服消息-图片消息
+	 *
+	 * @ClassName: image
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static class image {
 		private String media_id;
 
@@ -122,6 +147,13 @@ public class CustomMsg {
 
 	}
 
+	/**
+	 * 客服消息-语音消息
+	 *
+	 * @ClassName: voice
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static class voice {
 		private String media_id;
 
@@ -140,6 +172,13 @@ public class CustomMsg {
 
 	}
 
+	/**
+	 * 客服消息-视频消息
+	 *
+	 * @ClassName: video
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static class video {
 		private String media_id;
 		private String thumb_media_id;
@@ -189,6 +228,13 @@ public class CustomMsg {
 
 	}
 
+	/**
+	 * 客服消息-音乐消息
+	 *
+	 * @ClassName: music
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static class music {
 		private String title;
 		private String description;
@@ -247,7 +293,17 @@ public class CustomMsg {
 		}
 	}
 
+	/**
+	 * 客服消息-图文消息
+	 *
+	 * @ClassName: news
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static class news {
+		/**
+		 * 图文列表
+		 */
 		private article[] articles;
 
 		public news(article[] articles) {
@@ -265,10 +321,26 @@ public class CustomMsg {
 
 	}
 
+	/**
+	 * 单条图文
+	 *
+	 * @ClassName: article
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public static class article {
+		/**
+		 * 显示的标题
+		 */
 		private String title;
-		private String url;
+		/**
+		 * 显示图片的连接
+		 */
 		private String picurl;
+		/**
+		 * 打开的URL
+		 */
+		private String url;
 
 		public article(String title, String url, String picurl) {
 			super();
@@ -302,17 +374,37 @@ public class CustomMsg {
 		}
 
 	}
-	
+
 	public static enum CustomMsgType {
 
-		TEXT("text"), // 文本消息
-		IMAGE("image"), // 图片消息
-		VOICE("voice"), // 声音消息
-		VIDEO("video"), // 视频消息
-		MUSIC("music"), // 音乐消息
-		NEWS("news"), // 图文消息
-		WXCARD("wxcard")// 卡券消息
-		;
+		/**
+		 * 文本消息
+		 */
+		TEXT("text"),
+		/**
+		 * 图片消息
+		 */
+		IMAGE("image"),
+		/**
+		 * 声音消息
+		 */
+		VOICE("voice"),
+		/**
+		 * 视频消息
+		 */
+		VIDEO("video"),
+		/**
+		 * 音乐消息
+		 */
+		MUSIC("music"),
+		/**
+		 * 图文消息
+		 */
+		NEWS("news"),
+		/**
+		 * 卡券消息
+		 */
+		WXCARD("wxcard");
 
 		private String msgtype;
 

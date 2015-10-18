@@ -8,16 +8,31 @@ package org.dbyz.wechat.app.entity;
  * @version: V1.0
  */
 public class TemplateMsg {
-
+	/**
+	 * 发送对象的openId
+	 */
 	private String touser;
+	/**
+	 * 模版Id
+	 */
 	private String template_id;
+	/**
+	 * 跳转的地址
+	 */
 	private String url;
+	/**
+	 * 模版消息数据
+	 */
 	private Data data;
 
-	public TemplateMsg() {
-		super();
-	}
-
+	/**
+	 * 模版消息构造器
+	 * 
+	 * @param touser
+	 * @param template_id
+	 * @param url
+	 * @param data
+	 */
 	public TemplateMsg(String touser, String template_id, String url, Data data) {
 		super();
 		this.touser = touser;
@@ -26,12 +41,37 @@ public class TemplateMsg {
 		this.data = data;
 	}
 
+	private TemplateMsg() {
+		super();
+	}
+
+	/**
+	 * 创建工具ValueAndColor的对象工具
+	 */
 	private static TemplateMsg me = new TemplateMsg();
 
+	/**
+	 * 传入文本和颜色构建一个显示的.DATA
+	 * 
+	 * @Title: createValueAndColor
+	 * @param @param value
+	 * @param @param color
+	 * @param @return
+	 * @return: ValueAndColor
+	 * @since V1.0
+	 */
 	public static ValueAndColor createValueAndColor(String value, String color) {
 		return me.new ValueAndColor(value, color);
 	}
 
+	/**
+	 * 构建Data
+	 * 
+	 * @Title: createData
+	 * @param @return
+	 * @return: Data
+	 * @since V1.0
+	 */
 	public static Data createData() {
 		return me.new Data();
 	}
@@ -68,6 +108,13 @@ public class TemplateMsg {
 		this.data = data;
 	}
 
+	/**
+	 * 发送的数据 value-color键值对组（十组备用）
+	 *
+	 * @ClassName: Data
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public class Data {
 		private ValueAndColor first;
 		private ValueAndColor second;
@@ -165,8 +212,21 @@ public class TemplateMsg {
 		}
 	}
 
+	/**
+	 * 文本和颜色的键值对
+	 *
+	 * @ClassName: ValueAndColor
+	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @version: V1.0
+	 */
 	public class ValueAndColor {
+		/**
+		 * 文本内容
+		 */
 		private String value;
+		/**
+		 * 文本颜色
+		 */
 		private String color;
 
 		public ValueAndColor(String value, String color) {
