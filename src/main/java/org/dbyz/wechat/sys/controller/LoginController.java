@@ -32,7 +32,7 @@ public class LoginController {
 			session.setAttribute(SYS_SESSION_USER, user);
 			return "sys/SysIndex";
 		} else {
-			return "forward:/login.jsp";
+			return "forward:/index.jsp";
 		}
 	}
 }

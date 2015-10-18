@@ -52,6 +52,9 @@ public class OperationInterceptor extends HandlerInterceptorAdapter {
 
 		HttpSession session = null;
 
+		/**
+		 * 如果是调试状态则可以在连接后面添加openId属性进行授权页面调试
+		 */
 		if ("true".equals(getString("app.debug"))) {
 			if (request.getParameter("openId") != null) {
 				session = request.getSession(true);
