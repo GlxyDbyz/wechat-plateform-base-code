@@ -54,10 +54,10 @@ public class AppUtilTest {
 
 	@Test
 	public void testTemplateMsg() {
-		Data data = TemplateMsg.createData();
 		ValueAndColor first = TemplateMsg.createValueAndColor("你的一条请假申请通过了", "#173177");
 		ValueAndColor second = TemplateMsg.createValueAndColor( "2015-10-09 08:12:21", "#173177");
 		ValueAndColor third = TemplateMsg.createValueAndColor("王思贵总经理", "#173177");
+		Data data = TemplateMsg.createData();
 		data.setFirst(first);
 		data.setSecond(second);
 		data.setThird(third);
@@ -73,7 +73,7 @@ public class AppUtilTest {
 	public void testCreateMenu1() {
 		
 		/**
-		 * 一级菜单1
+		 * 菜单1
 		 */
 		Button b1s1 = new Button("员工信息绑定",MenuType.click, "user_bind", null, null);
 		Button b1s2 = new Button("员工考勤",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/attendance/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
@@ -82,7 +82,7 @@ public class AppUtilTest {
 		Button b1 = new Button("考勤相关",subButton1);
 
 		/**
-		 * 一级菜单2
+		 * 菜单2
 		 */
 		Button b2s1 = new Button("物品申购",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/purchase/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
 		Button b2s2 = new Button("财务申请",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/financial/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
@@ -90,7 +90,7 @@ public class AppUtilTest {
 		Button b2 = new Button("财务相关",subButton2);
 
 		/**
-		 * 一级菜单3
+		 * 菜单3
 		 */
 		Button b3s1 = new Button("公司公告",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/notice/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
 		Button b3s2 = new Button("会议安排",MenuType.view, null, "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9244851e2a525760&redirect_uri=http://glxydbyz.sturgeon.mopaas.com/meeting/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect", null);
@@ -98,7 +98,7 @@ public class AppUtilTest {
 		Button b3 = new Button("公共管理",subButton3);
 		
 		/**
-		 * 一级菜单数组
+		 * 菜单数组
 		 */
 		Button[] button = {b1,b2,b3};
 		
@@ -114,7 +114,7 @@ public class AppUtilTest {
 	public void testCreateMenu2() {
 		
 		/**
-		 * 一级菜单1
+		 * 菜单1
 		 */
 		Button b1s1 = new Button("扫码带提示",MenuType.scancode_push, "scancode_push", null, null);
 		Button b1s2 = new Button("扫码推事件",MenuType.scancode_waitmsg, "scancode_waitmsg", null, null);
@@ -122,7 +122,7 @@ public class AppUtilTest {
 		Button b1 = new Button("扫码",subButton1);
 
 		/**
-		 * 一级菜单2
+		 * 菜单2
 		 */
 		Button b2s1 = new Button("系统拍照",MenuType.pic_sysphoto, "pic_sysphoto", null, null);
 		Button b2s2 = new Button("拍照或相册",MenuType.pic_photo_or_album, "pic_photo_or_album", null, null);
@@ -131,7 +131,7 @@ public class AppUtilTest {
 		Button b2 = new Button("发图",subButton2);
 
 		/**
-		 * 一级菜单3
+		 * 菜单3
 		 */
 		Button b3s1 = new Button("发送位置",MenuType.location_select, "location_select", null, null);
 		//Button b3s2 = new Button("图片",MenuType.media_id, null, null, "MEDIA_ID1");
@@ -140,9 +140,52 @@ public class AppUtilTest {
 		//Button b3 = new Button("其他",subButton3);
 		
 		/**
-		 * 一级菜单数组
+		 * 菜单数组
 		 */
 		Button[] button = {b1,b2,b3s1};
+		
+		/**
+		 * 整个menu
+		 */
+		Menu menu = new Menu(button);
+		
+		AppUtil.createMenu(menu);
+	}
+	
+	@Test
+	public void testCreateMenu3() {
+		
+		/**
+		 * 菜单1
+		 */
+		Button b1s1 = new Button("微信绑定",MenuType.click, "user_bind", null, null);
+		Button b1s2 = new Button("模版消息",MenuType.click, "sent_template", null, null);;
+		Button b1s3 = new Button("客服文本信息",MenuType.click, "sent_custom_text", null, null);
+		Button b1s4 = new Button("客服图文信息",MenuType.click, "sent_custom_article", null, null);
+		Button[] subButton1 = {b1s1,b1s2,b1s3,b1s4};
+		Button b1 = new Button("消息发送",subButton1);
+
+		/**
+		 * 菜单2
+		 */
+		Button b2s1 = new Button("系统拍照",MenuType.pic_sysphoto, "pic_sysphoto", null, null);
+		Button b2s2 = new Button("拍照或相册",MenuType.pic_photo_or_album, "pic_photo_or_album", null, null);
+		Button b2s3 = new Button("微信相册",MenuType.pic_weixin, "pic_weixin", null, null);
+		Button[] subButton2 = {b2s1,b2s2,b2s3};
+		Button b2 = new Button("发图",subButton2);
+		
+		/**
+		 * 菜单3
+		 */
+		Button b3s1 = new Button("扫码带提示",MenuType.scancode_push, "scancode_push", null, null);
+		Button b3s2 = new Button("扫码推事件",MenuType.scancode_waitmsg, "scancode_waitmsg", null, null);
+		Button[] subButton3 = {b3s1,b3s2};
+		Button b3 = new Button("扫码",subButton3);
+		
+		/**
+		 * 一级菜单数组
+		 */
+		Button[] button = {b1,b2,b3};
 		
 		/**
 		 * 整个menu

@@ -128,6 +128,7 @@ public class RequestMsg {
 	// -------7. 事件推送-------------------
 	/**
 	 * 事件名称
+	 * 
 	 * @see EventType
 	 */
 	@XmlElement(name = "Event", required = false)
@@ -518,7 +519,15 @@ public class RequestMsg {
 			this.name = name;
 		}
 
-		public String getName() {
+		/**
+		 * 获取event的名称，和RequestMsg.getEvent()进行比较
+		 * 
+		 * @Title: getEvent
+		 * @param @return
+		 * @return: String
+		 * @since V1.0
+		 */
+		public String getEvent() {
 			return name;
 		}
 	}
