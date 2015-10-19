@@ -10,12 +10,14 @@ $(function() {
 		if (valid) {
 			$.ajax({
 				type : "post",
-				url : "/wechat-plateform-base-code/sys/login",
+				url : webRoot+"/sys/login",
 				data:{"name":$("#name").val(),"password":$("#password").val()},
 				dataType : "json",
 				success : function(req) {
 					if (req.success == true) {
 						$("#loginForm").submit();
+					}else{
+						$("#password").parent().addClass("am-form-error");
 					}
 				},
 				error : function(req) {

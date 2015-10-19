@@ -1,15 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
-<head lang="en">
-  <meta charset="UTF-8">
-  <title>后台管理</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link rel ="icon" href="${pageContext.request.contextPath}/images/favicon.ico">
+<head>
+<%@ include file="/include/common-include.jsp" %>
+<title>后台管理</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/amazeui.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.css"/>
 </head>

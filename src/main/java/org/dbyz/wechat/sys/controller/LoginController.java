@@ -47,7 +47,7 @@ public class LoginController {
 	public String redirect(HttpServletRequest req, SysUser user) {
 		HttpSession session = req.getSession(false);
 		if (session.getAttribute(SYS_SESSION_USER) != null) {
-			return "sys/SysIndex";
+			return "sys/sys-index";
 		} else {
 			return "redirect:/index.jsp";
 		}
