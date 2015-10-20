@@ -10,7 +10,7 @@ $(function() {
 		if (valid) {
 			$.ajax({
 				type : "post",
-				url : webRoot+"/sys/login",
+				url : systemConfigs.webRoot+"/sys/login",
 				data:{"name":$("#name").val(),"password":$("#password").val()},
 				dataType : "json",
 				success : function(req) {

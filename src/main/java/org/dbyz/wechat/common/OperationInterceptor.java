@@ -37,9 +37,9 @@ public class OperationInterceptor extends HandlerInterceptorAdapter {
 		if (isWebStaticResourse(url) || url.indexOf("/app") != -1) {
 			// 静态页面资源不拦截
 			return true;
-		} else if (url.indexOf("/sys/login") != -1) {
+		} else if (url.indexOf("/sys/login") > -1) {
 			return true;
-		} else if (url.indexOf("/sys") != -1) {
+		} else if (url.indexOf("/sys") > -1) {
 			// 后台
 			HttpSession sysSession = request.getSession(false);
 			if (sysSession!=null && (SysUser) sysSession.getAttribute(SYS_SESSION_USER) == null) {
@@ -120,7 +120,7 @@ public class OperationInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private boolean isWebStaticResourse(String url) {
-		return (url.indexOf("/images") != -1 || url.indexOf("/css") != -1
-				|| url.indexOf("/js") != -1 || url.indexOf("error") != -1);
+		return (url.indexOf("/images") > -1 || url.indexOf("/css") > -1 || url.indexOf("/font") > -1
+				|| url.indexOf("/js") > -1 || url.indexOf("error") > -1);
 	}
 }
