@@ -18,6 +18,7 @@ import org.dbyz.wechat.app.entity.ErrCode;
 import org.dbyz.wechat.app.entity.ErrCode.ErrorCodeType;
 import org.dbyz.wechat.app.entity.Menu;
 import org.dbyz.wechat.app.entity.Oauth2Token;
+import org.dbyz.wechat.app.entity.PlateformUserInfo;
 import org.dbyz.wechat.app.entity.TemplateMsg;
 
 /**
@@ -367,6 +368,36 @@ public class AppUtil {
 			e.printStackTrace();
 		}
 
+		return null;
+	}
+	
+	/**
+	 * 获取指定openId的用户信息
+	 * 
+	 * @Title: getMenu
+	 * @param @return
+	 * @return: String
+	 * @since V1.0
+	 */
+	public static PlateformUserInfo getUserInfo(String openId) {
+		String urlStr = String.format(
+				"https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN",
+				getAccessToken(),openId);
+		HttpClient client = new HttpClient();
+		GetMethod method = new GetMethod(urlStr);
+		try {
+			client.executeMethod(method);
+			if (method.getStatusCode() == HttpStatus.SC_OK) {
+				String json = new String(method.getResponseBodyAsString()
+						.getBytes("ISO-8859-1"), "UTF-8");
+				return jsonToObject(json, PlateformUserInfo.class);
+			}
+		} catch (HttpException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 }

@@ -40,9 +40,12 @@
       </div>
     </form>
     <hr>
-    <p> <small>Powered by AmazeUI <br>  © 2015 Dbyz.org </small></p>
   </div>
 </div>
+<footer>
+		<hr>
+		<p class="am-padding-left am-footer"><small>Powered by AmazeUI <br>  © 2015 Dbyz. </small></p>
+	</footer>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/myutil/simple-valid.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/sys/sys-login.js"></script>

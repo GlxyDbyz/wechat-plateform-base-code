@@ -199,4 +199,9 @@ public class AppUtilTest {
 	public void testgetMenu() {
 		System.out.println(AppUtil.getMenu());
 	}
+	
+	@Test
+	public void testgetUserInfo() {
+		System.out.println(AppUtil.getUserInfo("oVucYt94aTif_E-2-uq6tAgUDpvc"));
+	}
 }

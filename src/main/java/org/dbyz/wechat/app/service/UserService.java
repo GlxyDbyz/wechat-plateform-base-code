@@ -5,7 +5,9 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.dbyz.wechat.app.dao.UserDao;
+import org.dbyz.wechat.app.entity.PlateformUserInfo;
 import org.dbyz.wechat.app.entity.User;
+import org.dbyz.wechat.app.util.AppUtil;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,6 +57,19 @@ public class UserService {
 
 	public User getUser(Long id) {
 		return userDao.getUser(id);
+	}
+
+	/**
+	 * 获取用户信息并保存
+	 * 
+	 * @Title: addUserInfo
+	 * @param @param fromUserName
+	 * @return: void
+	 * @since V1.0
+	 */
+	public void addUserInfo(String openId) {
+		PlateformUserInfo  userInfo = AppUtil.getUserInfo(openId);
+		userDao.saveUserInfo(userInfo);
 	}
 
 }

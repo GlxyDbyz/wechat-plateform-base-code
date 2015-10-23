@@ -3,13 +3,13 @@
 <mapper namespace="org.dbyz.wechat.app.dao.AppDao">
 	<insert id="saveRequestXml" parameterType="java.lang.String">
 		INSERT INTO
-		wc_request_xml(content,createTime)
+		wx_request_xml(content,createTime)
 		VALUES(#{requestXml},now());
 	</insert>
 
 	<insert id="saveResponseXml" parameterType="java.lang.String">
 		INSERT INTO
-		wc_response_xml(content,createTime)
+		wx_response_xml(content,createTime)
 		VALUES(#{responseXml},now());
 	</insert>
 </mapper>

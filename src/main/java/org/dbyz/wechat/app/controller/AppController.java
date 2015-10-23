@@ -115,6 +115,11 @@ public class AppController {
 		// 第一次关注公众号
 		if (EventType.SUBSCRIBE.getEvent().equals(request.getEvent())) {
 			replyText = "感谢您关注Dbyz的测试公众号^_^,详细功能请使用菜单！";
+			new Thread(new Runnable() {
+				public void run() {
+					userService.addUserInfo(request.getFromUserName());
+				}
+			}).start();
 		}
 
 		// 取消关注公众号
