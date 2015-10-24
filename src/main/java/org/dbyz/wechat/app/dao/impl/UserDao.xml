@@ -3,28 +3,28 @@
 <mapper namespace="org.dbyz.wechat.app.dao.UserDao">
 	<select id="getUser" parameterType="java.lang.Long"
 		resultType="org.dbyz.wechat.app.entity.User">
-		select * from wx_user where id = #{id}
+		SELECT * FROM wx_user WHERE id = #{id}
 	</select>
 
 	<select id="getByOpenId" parameterType="java.lang.String"
 		resultType="org.dbyz.wechat.app.entity.User">
-		select * from wx_user where openId = #{openId}
+		SELECT * FROM wx_user WHERE openId = #{openId}
 	</select>
 
 	<update id="bind" parameterType="java.util.HashMap">
-		update wx_user set openId =
+		UPDATE wx_user SET openId =
 		#{openId} , bindTime = now()
-		where name = #{name} and phone=#{phone};
+		WHERE name = #{name} and phone=#{phone};
 	</update>
 
 	<update id="unBind" parameterType="java.util.HashMap">
-		update wx_user
+		UPDATE wx_user
 		set openId = null
 		, bindTime = now()
-		where openId = #{openId};
+		WHERE openId = #{openId};
 	</update>
 	
-	<insert id="saveUserInfo" parameterType="org.dbyz.wechat.app.entity.PlateformUserInfo">
+	<insert id="savePlateformUserInfo" parameterType="org.dbyz.wechat.app.entity.PlateformUserInfo">
 		INSERT INTO wx_plateform_user_info
 	            (subscribe,
 	             nickName,
@@ -55,4 +55,49 @@
 				#{groupid},
 				 now());
 	</insert>
+	
+	<update id="updatePlateformUserInfo" parameterType="org.dbyz.wechat.app.entity.PlateformUserInfo">
+		UPDATE wx_plateform_user_info
+			SET subscribe = #{subscribe},
+			  	nickName = #{nickname},
+			  	sex = #{sex},
+			  	language = #{language},
+			  	city = #{city},
+			  	province = #{province},
+			  	country = #{country},
+			  	headImgUrl = #{headimgurl},
+			  	subscribeTime = #{subscribe_time},
+			  	unionId = #{unionid},
+			  	remark = #{remark},
+			  	groupId = #{groupid},
+			  	infoGetTime = now()
+		 WHERE openId = #{openid};
+	</update>
+	
+	<select id="getPlateformUserInfoListByMap" parameterType="java.util.Map" resultType="org.dbyz.wechat.app.entity.PlateformUserInfo">
+	   SELECT  id,
+			   subscribe,
+			   nickName nickname ,
+			   openId openid,
+			   sex,
+			   language,
+			   city,
+			   province,
+			   country,
+			   headImgUrl headimgurl,
+			   subscribeTime subscribe_time,
+			   unionId unionid,
+			   remark,
+			   groupId groupid,
+			   infoGetTime
+		FROM   wx_plateform_user_info
+			WHERE 1 = 1
+		<if test="openId!=null AND openId !=''">
+			AND openId = #{openId}
+		</if>
+		<if test="start!=null AND limit !=null">
+			LIMIT start, limit;
+		</if>
+	</select>
+	
 </mapper>

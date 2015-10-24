@@ -1,5 +1,7 @@
 package org.dbyz.wechat.app.entity;
 
+import java.util.Date;
+
 /**
  * 用户信息（从微信平台获取）
  *
@@ -8,10 +10,11 @@ package org.dbyz.wechat.app.entity;
  * @version: V1.0
  */
 public class PlateformUserInfo {
+	private Long id;
 	/**
 	 * 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
 	 */
-	private String subscribe;
+	private Integer subscribe;
 	/**
 	 * 用户的标识，对当前公众号唯一
 	 */
@@ -23,7 +26,7 @@ public class PlateformUserInfo {
 	/**
 	 * 用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
 	 */
-	private String sex;
+	private Integer sex;
 	/**
 	 * 用户的语言，简体中文为zh_CN
 	 */
@@ -60,13 +63,23 @@ public class PlateformUserInfo {
 	/**
 	 * 用户所在的分组ID
 	 */
-	private String groupid;
+	private Integer groupid;
+	
+	private Date infoGetTime;
 
-	public String getSubscribe() {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getSubscribe() {
 		return subscribe;
 	}
 
-	public void setSubscribe(String subscribe) {
+	public void setSubscribe(Integer subscribe) {
 		this.subscribe = subscribe;
 	}
 
@@ -86,11 +99,11 @@ public class PlateformUserInfo {
 		this.nickname = nickname;
 	}
 
-	public String getSex() {
+	public Integer getSex() {
 		return sex;
 	}
 
-	public void setSex(String sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
@@ -158,12 +171,20 @@ public class PlateformUserInfo {
 		this.remark = remark;
 	}
 
-	public String getGroupid() {
+	public Integer getGroupid() {
 		return groupid;
 	}
 
-	public void setGroupid(String groupid) {
+	public void setGroupid(Integer groupid) {
 		this.groupid = groupid;
+	}
+
+	public Date getInfoGetTime() {
+		return infoGetTime;
+	}
+
+	public void setInfoGetTime(Date infoGetTime) {
+		this.infoGetTime = infoGetTime;
 	}
 
 	@Override

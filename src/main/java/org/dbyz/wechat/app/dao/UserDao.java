@@ -1,5 +1,6 @@
 package org.dbyz.wechat.app.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.dbyz.wechat.app.entity.PlateformUserInfo;
@@ -49,5 +50,27 @@ public interface UserDao {
 	 * @return: Integer
 	 * @since V1.0
 	 */
-	Integer saveUserInfo(PlateformUserInfo userInfo);
+	Integer savePlateformUserInfo(PlateformUserInfo userInfo);
+
+	/**
+	 * 更新平台用户信息
+	 * 
+	 * @Title: updateUserInfo
+	 * @param @param userInfo
+	 * @param @return
+	 * @return: Integer
+	 * @since V1.0
+	 */
+	Integer updatePlateformUserInfo(PlateformUserInfo userInfo);
+
+	/**
+	 * 获取userInfoByMap
+	 * 
+	 * @Title: getPlatformUserInfoListByMap
+	 * @param @param param
+	 * @param @return
+	 * @return: List<PlateformUserInfo>
+	 * @since V1.0
+	 */
+	List<PlateformUserInfo> getPlateformUserInfoListByMap(Map<String, Object> param);
 }

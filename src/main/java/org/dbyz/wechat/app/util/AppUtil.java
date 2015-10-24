@@ -379,7 +379,7 @@ public class AppUtil {
 	 * @return: String
 	 * @since V1.0
 	 */
-	public static PlateformUserInfo getUserInfo(String openId) {
+	public static PlateformUserInfo getPlateformUserInfo(String openId) {
 		String urlStr = String.format(
 				"https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN",
 				getAccessToken(),openId);

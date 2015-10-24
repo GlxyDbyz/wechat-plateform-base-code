@@ -44,7 +44,7 @@ public class LoginController {
 	}
 
 	@RequestMapping("/index")
-	public String redirect(HttpServletRequest req, SysUser user) {
+	public String index(HttpServletRequest req, SysUser user) {
 		HttpSession session = req.getSession(false);
 		if (session.getAttribute(SYS_SESSION_USER) != null) {
 			return "sys/sys-index";

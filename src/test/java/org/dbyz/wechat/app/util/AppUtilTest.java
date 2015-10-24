@@ -202,6 +202,6 @@ public class AppUtilTest {
 	
 	@Test
 	public void testgetUserInfo() {
-		System.out.println(AppUtil.getUserInfo("oVucYt94aTif_E-2-uq6tAgUDpvc"));
+		System.out.println(AppUtil.getPlateformUserInfo("oVucYt94aTif_E-2-uq6tAgUDpvc"));
 	}
 }

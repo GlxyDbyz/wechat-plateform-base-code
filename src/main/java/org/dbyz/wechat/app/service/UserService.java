@@ -1,5 +1,9 @@
 package org.dbyz.wechat.app.service;
 
+import static org.dbyz.wechat.app.util.AppUtil.getPlateformUserInfo;
+
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -7,7 +11,6 @@ import javax.annotation.Resource;
 import org.dbyz.wechat.app.dao.UserDao;
 import org.dbyz.wechat.app.entity.PlateformUserInfo;
 import org.dbyz.wechat.app.entity.User;
-import org.dbyz.wechat.app.util.AppUtil;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -52,6 +55,13 @@ public class UserService {
 	 * @since V1.0
 	 */
 	public Integer unBind(String openId) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("openId", openId);
+		PlateformUserInfo userInfoDb = userDao.getPlateformUserInfoListByMap(param).get(0);
+		
+		userInfoDb.setSubscribe(0);
+		userDao.updatePlateformUserInfo(userInfoDb);
+		
 		return userDao.unBind(openId);
 	}
 
@@ -67,9 +77,23 @@ public class UserService {
 	 * @return: void
 	 * @since V1.0
 	 */
-	public void addUserInfo(String openId) {
-		PlateformUserInfo  userInfo = AppUtil.getUserInfo(openId);
-		userDao.saveUserInfo(userInfo);
+	public void addPlateformUserInfo(String openId) {
+		PlateformUserInfo userInfo = getPlateformUserInfo(openId);
+		userInfo.setInfoGetTime(new Date());
+		userDao.savePlateformUserInfo(userInfo);
+	}
+
+	/**
+	 * 获取用户信息并保存
+	 * 
+	 * @Title: addUserInfo
+	 * @param @param fromUserName
+	 * @return: void
+	 * @since V1.0
+	 */
+	public void updatePlateformUserInfo(String openId) {
+		PlateformUserInfo userInfo = getPlateformUserInfo(openId);
+		userDao.updatePlateformUserInfo(userInfo);
 	}
 
 }
