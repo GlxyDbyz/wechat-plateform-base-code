@@ -26,6 +26,7 @@ import org.dbyz.wechat.app.entity.ResponseMsg;
 import org.dbyz.wechat.app.entity.User;
 import org.dbyz.wechat.app.service.AppService;
 import org.dbyz.wechat.app.service.UserService;
+import org.dbyz.wechat.app.util.SimpleThreadPoolUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -115,11 +116,11 @@ public class AppController {
 		// 第一次关注公众号
 		if (EventType.SUBSCRIBE.getEvent().equals(request.getEvent())) {
 			replyText = "感谢您关注Dbyz的测试公众号^_^,详细功能请使用菜单！";
-			new Thread(new Runnable() {
+			SimpleThreadPoolUtil.execute(new Runnable() {
 				public void run() {
 					userService.addPlateformUserInfo(request.getFromUserName());
 				}
-			}).start();
+			});
 		}
 
 		// 取消关注公众号
@@ -139,65 +140,46 @@ public class AppController {
 		// 点击的是发送模版消息click("sent_template")
 		if ("sent_template".equals(request.getEventKey())) {
 			replyText = "模版消息正在发送，请稍候!";
-			new Thread(new Runnable() {
-				@Override
+			SimpleThreadPoolUtil.execute(new Runnable() {
 				public void run() {
-					try {
-						// 过一秒钟之后发送模版消息
-						Thread.sleep(1000);
-						appService.sentTemplateMsgDemo(request);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					appService.sentTemplateMsgDemo(request);
 				}
-			}).start();
+			});
+
+			new Thread().start();
 		}
 
 		// 点击的是发送模版消息click("sent_custom_text")
 		if ("sent_custom_text".equals(request.getEventKey())) {
 			replyText = "客服（文本）消息正在发送，请稍候!";
-			new Thread(new Runnable() {
-				@Override
+			SimpleThreadPoolUtil.execute(new Runnable() {
 				public void run() {
-					try {
-						// 过一秒钟之后发送模版消息
-						Thread.sleep(1000);
-						appService.sentCustomeTextMsgDemo(request);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					appService.sentCustomeTextMsgDemo(request);
 				}
-			}).start();
+			});
 		}
 
 		// 点击的是发送模版消息click("sent_custom_article")
 		if ("sent_custom_article".equals(request.getEventKey())) {
 			replyText = "客服（图文）消息正在发送，请稍候!";
-			new Thread(new Runnable() {
-				@Override
+			SimpleThreadPoolUtil.execute(new Runnable() {
 				public void run() {
-					try {
-						// 过一秒钟之后发送模版消息
-						Thread.sleep(1000);
-						appService.sentCustomeArticleMsgDemo(request);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					appService.sentCustomeArticleMsgDemo(request);
 				}
-			}).start();
+			});
 		}
 
 		response.setMsgType("text");
 		response.setContent(replyText);
 		String responseXml = null;
-		
+
 		try {
 			responseXml = bean2Xml(response, "UTF-8");
 			appService.saveResponseXml(responseXml);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-		
+
 		return responseXml;
 	}
 
