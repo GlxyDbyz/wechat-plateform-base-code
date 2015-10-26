@@ -1,6 +1,7 @@
 package org.dbyz.wechat.app.util;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -31,11 +32,11 @@ public class SimpleThreadPoolUtil {
 	 * @Title: submit
 	 * @param task
 	 *            需要执行的任务（有返回）
-	 * @return: void
+	 * @return: Future<T>
 	 * @since V1.0
 	 */
-	public static <T> void submit(Callable<T> task) {
-		pool.submit(task);
+	public static <T> Future<T> submit(Callable<T> task) {
+		return pool.submit(task);
 	}
 
 }

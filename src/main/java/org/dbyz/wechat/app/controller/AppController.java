@@ -4,6 +4,7 @@ import static org.apache.commons.codec.digest.DigestUtils.shaHex;
 import static org.dbyz.wechat.app.util.ConfigUtil.getString;
 import static org.dbyz.wechat.app.util.JaxbUtil.bean2Xml;
 import static org.dbyz.wechat.app.util.JaxbUtil.xml2Bean;
+import static org.dbyz.wechat.app.util.ScheduledThreadPoolUtil.execute;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +27,6 @@ import org.dbyz.wechat.app.entity.ResponseMsg;
 import org.dbyz.wechat.app.entity.User;
 import org.dbyz.wechat.app.service.AppService;
 import org.dbyz.wechat.app.service.UserService;
-import org.dbyz.wechat.app.util.SimpleThreadPoolUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -116,7 +116,7 @@ public class AppController {
 		// 第一次关注公众号
 		if (EventType.SUBSCRIBE.getEvent().equals(request.getEvent())) {
 			replyText = "感谢您关注Dbyz的测试公众号^_^,详细功能请使用菜单！";
-			SimpleThreadPoolUtil.execute(new Runnable() {
+			execute(new Runnable() {
 				public void run() {
 					userService.addPlateformUserInfo(request.getFromUserName());
 				}
@@ -140,16 +140,11 @@ public class AppController {
 		// 点击的是发送模版消息click("sent_template")
 		if ("sent_template".equals(request.getEventKey())) {
 			replyText = "模版消息正在发送，请稍候!";
-			SimpleThreadPoolUtil.execute(new Runnable() {
+			execute(new Runnable() {
 				public void run() {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 					appService.sentTemplateMsgDemo(request);
 				}
-			});
+			},1L);
 
 			new Thread().start();
 		}
@@ -157,31 +152,21 @@ public class AppController {
 		// 点击的是发送客服文本消息click("sent_custom_text")
 		if ("sent_custom_text".equals(request.getEventKey())) {
 			replyText = "客服（文本）消息正在发送，请稍候!";
-			SimpleThreadPoolUtil.execute(new Runnable() {
+			execute(new Runnable() {
 				public void run() {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 					appService.sentCustomeTextMsgDemo(request);
 				}
-			});
+			},1L);
 		}
 
 		// 点击的是发送客服图文消息click("sent_custom_article")
 		if ("sent_custom_article".equals(request.getEventKey())) {
 			replyText = "客服（图文）消息正在发送，请稍候!";
-			SimpleThreadPoolUtil.execute(new Runnable() {
+			execute(new Runnable() {
 				public void run() {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 					appService.sentCustomeArticleMsgDemo(request);
 				}
-			});
+			},1L);
 		}
 
 		response.setMsgType("text");
