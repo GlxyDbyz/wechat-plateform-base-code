@@ -77,12 +77,7 @@ public class AppController {
 		// 读取微信发来的消息
 		final RequestMsg request = getRequestMsg(req);
 		// 生成并发送回复消息
-		SimpleThreadPoolUtil.execute(new Runnable() {
-			public void run() {
-				responseText(resp, generateResponseXml(request));
-			}
-		});
-
+		responseText(resp, generateResponseXml(request));
 	}
 
 	/**
