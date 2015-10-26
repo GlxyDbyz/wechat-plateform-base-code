@@ -65,7 +65,8 @@ public class AppController {
 	 * @return String
 	 */
 	@RequestMapping(value = "/app")
-	public void entrance(HttpServletRequest req, HttpServletResponse resp,
+	public void entrance(HttpServletRequest req,
+			final HttpServletResponse resp,
 			@RequestParam(required = false) Integer platformType) {
 		// 首次接入微信的验证方法（echostr：随即字符串特有的标志）
 		if (req.getParameter("echostr") != null) {
@@ -74,9 +75,13 @@ public class AppController {
 		}
 
 		// 读取微信发来的消息
-		RequestMsg request = getRequestMsg(req);
+		final RequestMsg request = getRequestMsg(req);
 		// 生成并发送回复消息
-		responseText(resp, generateResponseXml(request));
+		SimpleThreadPoolUtil.execute(new Runnable() {
+			public void run() {
+				responseText(resp, generateResponseXml(request));
+			}
+		});
 
 	}
 
@@ -142,6 +147,11 @@ public class AppController {
 			replyText = "模版消息正在发送，请稍候!";
 			SimpleThreadPoolUtil.execute(new Runnable() {
 				public void run() {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					appService.sentTemplateMsgDemo(request);
 				}
 			});
@@ -149,21 +159,31 @@ public class AppController {
 			new Thread().start();
 		}
 
-		// 点击的是发送模版消息click("sent_custom_text")
+		// 点击的是发送客服文本消息click("sent_custom_text")
 		if ("sent_custom_text".equals(request.getEventKey())) {
 			replyText = "客服（文本）消息正在发送，请稍候!";
 			SimpleThreadPoolUtil.execute(new Runnable() {
 				public void run() {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					appService.sentCustomeTextMsgDemo(request);
 				}
 			});
 		}
 
-		// 点击的是发送模版消息click("sent_custom_article")
+		// 点击的是发送客服图文消息click("sent_custom_article")
 		if ("sent_custom_article".equals(request.getEventKey())) {
 			replyText = "客服（图文）消息正在发送，请稍候!";
 			SimpleThreadPoolUtil.execute(new Runnable() {
 				public void run() {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					appService.sentCustomeArticleMsgDemo(request);
 				}
 			});
