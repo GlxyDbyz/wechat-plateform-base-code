@@ -92,10 +92,10 @@
 			   infoGetTime
 		FROM   wx_plateform_user_info
 			WHERE 1 = 1
-		<if test="openId!=null AND openId !=''">
+		<if test="openId!=null and openId !=''">
 			AND openId = #{openId}
 		</if>
-		<if test="start!=null AND limit !=null">
+		<if test="start!=null and limit !=null">
 			LIMIT start, limit;
 		</if>
 	</select>
@@ -103,7 +103,7 @@
 	<delete id="deletePlateformUserInfo" parameterType="java.util.Map">
 		DELETE FROM wx_plateform_user_info WHERE
 		openId = #{openId}
-		<if test="id!=null AND id!=''">
+		<if test="id!=null and id!=''">
 			or id = #{id}
 		</if>
 	</delete>

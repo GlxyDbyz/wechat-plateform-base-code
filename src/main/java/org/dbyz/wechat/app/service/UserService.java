@@ -2,7 +2,6 @@ package org.dbyz.wechat.app.service;
 
 import static org.dbyz.wechat.app.util.AppUtil.getPlateformUserInfo;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,14 +85,11 @@ public class UserService {
 		param.put("openId", openId);
 		List<PlateformUserInfo> list = userDao.getPlateformUserInfoList(param);
 		if (list == null || list.size() == 0) {
-			userInfo.setInfoGetTime(new Date());
 			userDao.savePlateformUserInfo(userInfo);
 		} else if (list != null && list.size() == 1) {
-			userInfo.setInfoGetTime(new Date());
 			userDao.updatePlateformUserInfo(userInfo);
 		} else if (list.size() > 1) {
 			userDao.deletePlateformUserInfo(param);
-			userInfo.setInfoGetTime(new Date());
 			userDao.savePlateformUserInfo(userInfo);
 		}
 	}
