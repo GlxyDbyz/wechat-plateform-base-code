@@ -64,13 +64,24 @@ public interface UserDao {
 	Integer updatePlateformUserInfo(PlateformUserInfo userInfo);
 
 	/**
-	 * 获取userInfoByMap
+	 * 获取userInfo
 	 * 
-	 * @Title: getPlatformUserInfoListByMap
+	 * @Title: getPlatformUserInfoList
 	 * @param @param param
 	 * @param @return
 	 * @return: List<PlateformUserInfo>
 	 * @since V1.0
 	 */
-	List<PlateformUserInfo> getPlateformUserInfoListByMap(Map<String, Object> param);
+	List<PlateformUserInfo> getPlateformUserInfoList(Map<String, Object> param);
+
+	/**
+	 * 删除userInfo
+	 * 
+	 * @Title: deletePlateformUserInfo
+	 * @param @param param
+	 * @param @return
+	 * @return: Integer
+	 * @since V1.0
+	 */
+	Integer deletePlateformUserInfo(Map<String, Object> param);
 }

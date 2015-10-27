@@ -74,7 +74,7 @@
 		 WHERE openId = #{openid};
 	</update>
 	
-	<select id="getPlateformUserInfoListByMap" parameterType="java.util.Map" resultType="org.dbyz.wechat.app.entity.PlateformUserInfo">
+	<select id="getPlateformUserInfoList" parameterType="java.util.Map" resultType="org.dbyz.wechat.app.entity.PlateformUserInfo">
 	   SELECT  id,
 			   subscribe,
 			   nickName nickname ,
@@ -99,5 +99,12 @@
 			LIMIT start, limit;
 		</if>
 	</select>
-	
+
+	<delete id="deletePlateformUserInfo" parameterType="java.util.Map">
+		DELETE FROM wx_plateform_user_info WHERE
+		openId = #{openId}
+		<if test="id!=null AND id!=''">
+			or id = #{id}
+		</if>
+	</delete>
 </mapper>

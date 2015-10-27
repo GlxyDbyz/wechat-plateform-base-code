@@ -4,6 +4,7 @@ import static org.dbyz.wechat.app.util.AppUtil.getPlateformUserInfo;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -57,11 +58,12 @@ public class UserService {
 	public Integer unBind(String openId) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("openId", openId);
-		PlateformUserInfo userInfoDb = userDao.getPlateformUserInfoListByMap(param).get(0);
-		
+		PlateformUserInfo userInfoDb = userDao.getPlateformUserInfoList(param)
+				.get(0);
+
 		userInfoDb.setSubscribe(0);
 		userDao.updatePlateformUserInfo(userInfoDb);
-		
+
 		return userDao.unBind(openId);
 	}
 
@@ -77,10 +79,23 @@ public class UserService {
 	 * @return: void
 	 * @since V1.0
 	 */
-	public void addPlateformUserInfo(String openId) {
+	public void saveOrUpdatePlateformUserInfo(String openId) {
 		PlateformUserInfo userInfo = getPlateformUserInfo(openId);
-		userInfo.setInfoGetTime(new Date());
-		userDao.savePlateformUserInfo(userInfo);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("openId", openId);
+		List<PlateformUserInfo> list = userDao.getPlateformUserInfoList(param);
+		if (list == null || list.size() == 0) {
+			userInfo.setInfoGetTime(new Date());
+			userDao.savePlateformUserInfo(userInfo);
+		} else if (list != null && list.size() == 1) {
+			userInfo.setInfoGetTime(new Date());
+			userDao.updatePlateformUserInfo(userInfo);
+		} else if (list.size() > 1) {
+			userDao.deletePlateformUserInfo(param);
+			userInfo.setInfoGetTime(new Date());
+			userDao.savePlateformUserInfo(userInfo);
+		}
 	}
 
 	/**
