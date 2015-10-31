@@ -1,5 +1,8 @@
 package org.dbyz.wechat.app.util;
 
+import static java.lang.String.format;
+import static org.apache.commons.httpclient.HttpStatus.SC_OK;
+import static org.dbyz.wechat.app.util.ConfigUtil.getString;
 import static org.dbyz.wechat.app.util.JsonUtil.jsonToObject;
 import static org.dbyz.wechat.app.util.JsonUtil.objectToJson;
 
@@ -7,7 +10,6 @@ import java.io.IOException;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
@@ -29,6 +31,19 @@ import org.dbyz.wechat.app.entity.TemplateMsg;
  * @version: V1.0
  */
 public class AppUtil {
+	private static final String APPID = getString("AppID");
+	private static final String APPSECRET = getString("AppSecret");
+
+	private static final String OPENID_GET_BY_CODE_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + APPID + "&secret=" + APPSECRET + "&code=%s&grant_type=authorization_code";
+	private static final String WEIXIN_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + APPID + "&secret=" + APPSECRET;
+	private static final String USER_INFO_GET_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN";
+	private static final String MENU_GET_URL = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=%s";
+	private static final String MENU_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s";
+	private static final String TEMPLATE_MESSAGE_SEND_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s";
+	private static final String TEMPLATEID_GET_URL = "https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=%s";
+	private static final String INDUSTRY_SET_URL = "https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token=%s";
+	private static final String CUSTOM_MESSAGE_SEND_URL = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=%s";
+
 	private static Long accessTokenLastGetTime = 0L;
 	private static String accessTokenStr = "";
 
@@ -41,23 +56,17 @@ public class AppUtil {
 	 * @since V1.0
 	 */
 	public static String getAccessToken() {
-		if (System.currentTimeMillis() - accessTokenLastGetTime > (3600 * 1 * 1000)) {// 每小时取一次
+		if ((System.currentTimeMillis() - accessTokenLastGetTime) > 3600 * 1000 * 1) {// 每小时取一次
 			accessTokenLastGetTime = System.currentTimeMillis();
-
 			// 拼接访问的url
-			String urlStr = String
-					.format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s",
-							ConfigUtil.getString("AppID"),
-							ConfigUtil.getString("AppSecret"));
+			String urlStr = format(WEIXIN_TOKEN_URL);
 			HttpClient client = new HttpClient();
 			GetMethod getMethod = new GetMethod(urlStr);
-
 			try {
 				client.executeMethod(getMethod);
-				if (getMethod.getStatusCode() == HttpStatus.SC_OK) {
+				if (getMethod.getStatusCode() == SC_OK) {
 					String json = getMethod.getResponseBodyAsString();
-					AccessToken tokenBean = jsonToObject(json,
-							AccessToken.class);
+					AccessToken tokenBean = jsonToObject(json, AccessToken.class);
 					accessTokenStr = tokenBean.getAccess_token();
 				}
 
@@ -70,7 +79,6 @@ public class AppUtil {
 			}
 		}
 		return accessTokenStr;
-
 	}
 
 	/**
@@ -83,22 +91,16 @@ public class AppUtil {
 	 * @since V1.0
 	 */
 	public static String getOpenIdByCode(String code) {
-		String urlStr = String
-				.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
-						ConfigUtil.getString("AppID"),
-						ConfigUtil.getString("AppSecret"), code);
-
+		String urlStr = format(OPENID_GET_BY_CODE_URL, code);
 		HttpClient client = new HttpClient();
 		GetMethod getMethod = new GetMethod(urlStr);
-
 		try {
 			client.executeMethod(getMethod);
-			if (getMethod.getStatusCode() == HttpStatus.SC_OK) {
+			if (getMethod.getStatusCode() == SC_OK) {
 				String json = getMethod.getResponseBodyAsString();
 				Oauth2Token oauth2Token = jsonToObject(json, Oauth2Token.class);
 				return oauth2Token.getOpenid();
 			}
-
 		} catch (HttpException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -120,25 +122,20 @@ public class AppUtil {
 	 */
 	public static boolean sendCustomerMsg(CustomMsg msg) {
 		String json = objectToJson(msg);
-		String urlStr = String
-				.format("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=%s",
-						getAccessToken());
+		String urlStr = format(CUSTOM_MESSAGE_SEND_URL, getAccessToken());
 		HttpClient client = new HttpClient();
 		PostMethod postMethod = new PostMethod(urlStr);
-
 		try {
-			RequestEntity requestEntity = new StringRequestEntity(json,
-					"application/json", "UTF-8");
+			RequestEntity requestEntity = new StringRequestEntity(json, "application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			client.executeMethod(postMethod);
-			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
+			if (postMethod.getStatusCode() == SC_OK) {
 				json = postMethod.getResponseBodyAsString();
 				ErrCode err = jsonToObject(json, ErrCode.class);
 				if (ErrorCodeType.ok.getErrcode().equals(err.getErrcode())) {
 					return true;
 				}
 			}
-
 		} catch (HttpException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -160,28 +157,21 @@ public class AppUtil {
 	 * @since V1.0
 	 */
 	public static Boolean setPlateformIndustryType(int code1, int code2) {
-
-		String json = "{\"industry_id1\":\"" + code1 + "\",\"industry_id2\":\""
-				+ code2 + "\"}";
-		String urlStr = String
-				.format("https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token=%s",
-						getAccessToken());
+		String json = "{\"industry_id1\":\"" + code1 + "\",\"industry_id2\":\"" + code2 + "\"}";
+		String urlStr = format(INDUSTRY_SET_URL, getAccessToken());
 		HttpClient client = new HttpClient();
 		PostMethod postMethod = new PostMethod(urlStr);
-
 		try {
-			RequestEntity requestEntity = new StringRequestEntity(json,
-					"application/json", "UTF-8");
+			RequestEntity requestEntity = new StringRequestEntity(json, "application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			client.executeMethod(postMethod);
-			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
+			if (postMethod.getStatusCode() == SC_OK) {
 				json = postMethod.getResponseBodyAsString();
 				ErrCode err = jsonToObject(json, ErrCode.class);
 				if (ErrorCodeType.ok.getErrcode().equals(err.getErrcode())) {
 					return true;
 				}
 			}
-
 		} catch (HttpException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -202,27 +192,21 @@ public class AppUtil {
 	 * @since V1.0
 	 */
 	public static String getTemplateMsgId(String shortTemplateId) {
-
 		String json = " {\"template_id_short\":\"" + shortTemplateId + "\"}";
-		String urlStr = String
-				.format("https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=%s",
-						getAccessToken());
+		String urlStr = format(TEMPLATEID_GET_URL, getAccessToken());
 		HttpClient client = new HttpClient();
 		PostMethod postMethod = new PostMethod(urlStr);
-
 		try {
-			RequestEntity requestEntity = new StringRequestEntity(json,
-					"application/json", "UTF-8");
+			RequestEntity requestEntity = new StringRequestEntity(json, "application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			client.executeMethod(postMethod);
-			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
+			if (postMethod.getStatusCode() == SC_OK) {
 				json = postMethod.getResponseBodyAsString();
 				ErrCode err = jsonToObject(json, ErrCode.class);
 				if (ErrorCodeType.ok.getErrcode().equals(err.getErrcode())) {
 					return err.getTemplate_id();
 				}
 			}
-
 		} catch (HttpException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -243,19 +227,15 @@ public class AppUtil {
 	 * @since V1.0
 	 */
 	public static Boolean sendTemplateMsg(TemplateMsg msg) {
-		;
-		String urlStr = String
-				.format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s",
-						getAccessToken());
+		String urlStr = format(TEMPLATE_MESSAGE_SEND_URL, getAccessToken());
 		HttpClient client = new HttpClient();
 		PostMethod postMethod = new PostMethod(urlStr);
-
 		try {
-			RequestEntity requestEntity = new StringRequestEntity(
-					objectToJson(msg), "application/json", "UTF-8");
+			RequestEntity requestEntity = new StringRequestEntity(objectToJson(msg),
+					"application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			client.executeMethod(postMethod);
-			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
+			if (postMethod.getStatusCode() == SC_OK) {
 				String json = postMethod.getResponseBodyAsString();
 				ErrCode err = jsonToObject(json, ErrCode.class);
 				if (ErrorCodeType.ok.getErrcode().equals(err.getErrcode())) {
@@ -282,15 +262,12 @@ public class AppUtil {
 	 * @since V1.0
 	 */
 	public static void getWeather(String cityCode) {
-
-		String urlStr = String.format(
-				"http://www.weather.com.cn/data/cityinfo/%s.html", cityCode);
+		String urlStr = format("http://www.weather.com.cn/data/cityinfo/%s.html", cityCode);
 		HttpClient client = new HttpClient();
 		GetMethod getMethod = new GetMethod(urlStr);
-
 		try {
 			client.executeMethod(getMethod);
-			if (getMethod.getStatusCode() == HttpStatus.SC_OK) {
+			if (getMethod.getStatusCode() == SC_OK) {
 				String json = getMethod.getResponseBodyAsString();
 				System.out.println(json);
 			}
@@ -314,18 +291,15 @@ public class AppUtil {
 	 * @since V1.0
 	 */
 	public static Boolean createMenu(Menu menu) {
-		String urlStr = String
-				.format("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s",
-						getAccessToken());
+		String urlStr = format(MENU_CREATE_URL, getAccessToken());
 		HttpClient client = new HttpClient();
 		PostMethod postMethod = new PostMethod(urlStr);
-
 		try {
-			RequestEntity requestEntity = new StringRequestEntity(
-					objectToJson(menu), "application/json", "UTF-8");
+			RequestEntity requestEntity = new StringRequestEntity(objectToJson(menu),
+					"application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			client.executeMethod(postMethod);
-			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
+			if (postMethod.getStatusCode() == SC_OK) {
 				String json = postMethod.getResponseBodyAsString();
 				ErrCode err = jsonToObject(json, ErrCode.class);
 				if (ErrorCodeType.ok.getErrcode().equals(err.getErrcode())) {
@@ -350,16 +324,14 @@ public class AppUtil {
 	 * @since V1.0
 	 */
 	public static String getMenu() {
-		String urlStr = String.format(
-				"https://api.weixin.qq.com/cgi-bin/menu/get?access_token=%s",
-				getAccessToken());
+		String urlStr = format(MENU_GET_URL, getAccessToken());
 		HttpClient client = new HttpClient();
 		GetMethod method = new GetMethod(urlStr);
 		try {
 			client.executeMethod(method);
-			if (method.getStatusCode() == HttpStatus.SC_OK) {
-				String json = new String(method.getResponseBodyAsString()
-						.getBytes("ISO-8859-1"), "UTF-8");
+			if (method.getStatusCode() == SC_OK) {
+				String json = new String(method.getResponseBodyAsString().getBytes("ISO-8859-1"),
+						"UTF-8");
 				return json;
 			}
 		} catch (HttpException e) {
@@ -370,7 +342,7 @@ public class AppUtil {
 
 		return null;
 	}
-	
+
 	/**
 	 * 获取指定openId的用户信息
 	 * 
@@ -380,16 +352,14 @@ public class AppUtil {
 	 * @since V1.0
 	 */
 	public static PlateformUserInfo getPlateformUserInfo(String openId) {
-		String urlStr = String.format(
-				"https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN",
-				getAccessToken(),openId);
+		String urlStr = format(USER_INFO_GET_URL, getAccessToken(), openId);
 		HttpClient client = new HttpClient();
 		GetMethod method = new GetMethod(urlStr);
 		try {
 			client.executeMethod(method);
-			if (method.getStatusCode() == HttpStatus.SC_OK) {
-				String json = new String(method.getResponseBodyAsString()
-						.getBytes("ISO-8859-1"), "UTF-8");
+			if (method.getStatusCode() == SC_OK) {
+				String json = new String(method.getResponseBodyAsString().getBytes("ISO-8859-1"),
+						"UTF-8");
 				return jsonToObject(json, PlateformUserInfo.class);
 			}
 		} catch (HttpException e) {
@@ -397,7 +367,7 @@ public class AppUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 }
