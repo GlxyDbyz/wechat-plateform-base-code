@@ -24,34 +24,43 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class OperationInterceptor extends HandlerInterceptorAdapter {
 	@SuppressWarnings("unused")
-	private static Logger logger = LoggerFactory
-			.getLogger(OperationInterceptor.class);
+	private static Logger logger = LoggerFactory.getLogger(OperationInterceptor.class);
 
 	/**
 	 * 重写 preHandle()方法，在业务处理器处理请求之前对该请求进行拦截处理
 	 */
 	@Override
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+			Object handler) throws Exception {
+
 		String url = request.getRequestURI();
-		if (isWebStaticResourse(url) || url.indexOf("/app") != -1) {
-			// 静态页面资源不拦截
+
+		if (isStaticWebResourse(url) || url.indexOf("/app") > -1) {
+			// 静态页面和微信接口（/app）不拦截
 			return true;
+
 		} else if (url.indexOf("/sys/login") > -1) {
+			// 管理后台登录不拦截
 			return true;
+
 		} else if (url.indexOf("/sys") > -1) {
-			// 后台
+			// 管理后台
 			HttpSession sysSession = request.getSession(false);
-			if (sysSession!=null && (SysUser) sysSession.getAttribute(SYS_SESSION_USER) == null) {
-				response.sendRedirect(request.getContextPath() + "/error400.jsp");
+			if (sysSession != null && (SysUser) sysSession.getAttribute(SYS_SESSION_USER) == null) {
+				// 管理后台没有登录
+				response.sendRedirect(request.getContextPath() + "/index.jsp");
 				return false;
+
 			} else {
+				// 管理后台已经登录
 				return true;
+
 			}
 		}
 
-		HttpSession session = null;
+		// 以下是微信前台
 
+		HttpSession session = null;
 		/**
 		 * 如果是调试状态则可以在连接后面添加openId属性进行授权页面调试
 		 */
@@ -73,54 +82,59 @@ public class OperationInterceptor extends HandlerInterceptorAdapter {
 		if (!StringUtils.isEmpty(code)) {
 			// 没有openId 通过code获取
 			openId = getOpenIdByCode(code);
-		}
 
-		if (openId != null && openId.trim().length() > 10) {
-			// 把openId放入session
-			session = request.getSession(true);
-			session.setAttribute("openId", openId);
-		} else { // 跳转提示页面
-			// request.getRequestDispatcher("/error.jsp").forward(request,
-			// response);
-			response.sendRedirect(request.getContextPath() + "/error400.jsp");
-			return false;
+			if (openId != null && openId.trim().length() > 10) {
+				// 有openId则把它放入session
+				session = request.getSession(true);
+				session.setAttribute("openId", openId);
+				return true;
+
+			} else {
+				// 没有 openId 跳转提示页面
+				// request.getRequestDispatcher("/error.jsp").forward(request,response);
+				response.sendRedirect(request.getContextPath() + "/error400.jsp");
+				return false;
+			}
+
 		}
-		return true;
+		// 其他情况
+		return false;
 	}
 
 	/**
 	 * 重写 afterCompletion()方法，在业务处理器处理请求后处理数据(日志)
 	 */
 	@Override
-	public void afterCompletion(HttpServletRequest request,
-			HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		logUerOperation(request, response, ex);
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+			Object handler, Exception ex) throws Exception {
+
+		String url = request.getRequestURI();
+		HttpSession session = request.getSession(false);
+		String openId = "";
+		if (session != null) {
+			openId = (String) session.getAttribute("openId");
+		}
+
+		if (!isStaticWebResourse(url)) {
+			if (!StringUtils.isEmpty(openId)) {// 微信前台
+			}
+
+			if (url.indexOf("/sys") != 0) {// 管理后台
+			}
+		}
 	}
 
 	/**
-	 * 用户操作记载日志
+	 * 是否为静态WEB资源
+	 * 
+	 * @Title: isWebStaticResourse
+	 * @param url
+	 *            访问路径
+	 * @return: boolean
+	 * @since V1.0
 	 */
-	private void logUerOperation(HttpServletRequest request,
-			HttpServletResponse response, Exception ex) {
-		String url = request.getRequestURI();
-		HttpSession session = request.getSession(false);
-		String platformUserName = "";
-		if (session != null) {
-			platformUserName = (String) session.getAttribute("openId");
-		}
-
-		if (!isWebStaticResourse(url)) {
-			if (!StringUtils.isEmpty(platformUserName)) {// 前台
-				// 日志记录方法
-			}
-		} else if (url.indexOf("/sys") != 0) {// 后台
-
-		}
-	}
-
-	private boolean isWebStaticResourse(String url) {
-		return (url.indexOf("/images") > -1 || url.indexOf("/css") > -1 || url.indexOf("/font") > -1
-				|| url.indexOf("/js") > -1 || url.indexOf("error") > -1);
+	private boolean isStaticWebResourse(String url) {
+		return (url.indexOf("/images") > -1 || url.indexOf("/css") > -1
+				|| url.indexOf("/font") > -1 || url.indexOf("/js") > -1 || url.indexOf("/error") > -1);
 	}
 }
