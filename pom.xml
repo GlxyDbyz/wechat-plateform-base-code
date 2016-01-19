@@ -5,7 +5,7 @@
 	<artifactId>wechat-plateform-base-code</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>standard Maven Webapp</name>
+	<name>wechat-plateform-base-code</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
