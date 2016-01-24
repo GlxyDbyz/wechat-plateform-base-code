@@ -74,18 +74,23 @@
 							class="am-icon-angle-right am-fr am-margin-right"></span></a>
 						<ul class="am-list am-collapse admin-sidebar-sub am-in"
 							id="collapse-nav">
-							<li><a
-								href="${pageContext.request.contextPath}/sys/user/registered"
-								class="am-cf"> <span class="am-icon-users"></span> 注册用户 <span
-									class="am-badge am-badge-secondary am-margin-right am-fr">+6</span>
-									</span></a></li>
-							<li><a
-								href="${pageContext.request.contextPath}/sys/user/unregistered"><span
-									class="am-icon-user-plus"></span> 关注(Only) <span
-									class="am-badge am-badge-secondary am-margin-right am-fr">+22</span></a></li>
-							<li><a href="admin-gallery.html"><span
-									class="am-icon-envelope-o"></span> 用户消息<span
-									class="am-badge am-badge-secondary am-margin-right am-fr">+12</span></a></li>
+							<li>
+								<a href="javascript:void(0)" url="${pageContext.request.contextPath}/sys/user/registered" class="am-cf"> 
+									<span class="am-icon-users"></span> 注册用户 
+									<span class="am-badge am-badge-secondary am-margin-right am-fr">+6</span></span>
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" url="${pageContext.request.contextPath}/sys/user/unregistered">
+									<span class="am-icon-user-plus"></span> 关注(Only) 
+									<span class="am-badge am-badge-secondary am-margin-right am-fr">+22</span>
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" url="${pageContext.request.contextPath}/sys/user/message"><span class="am-icon-envelope-o">
+									</span> 用户消息<span class="am-badge am-badge-secondary am-margin-right am-fr">+12</span>
+								</a>
+							</li>
 						</ul></li>
 				</ul>
 
@@ -111,74 +116,8 @@
 		<!-- sidebar end -->
 
 		<!-- content start -->
-		<div class="admin-content">
-
-			<div class="am-cf am-padding">
-				<div class="am-cf text-center">
-					<strong>数据统计(fake)</strong>
-				</div>
-			</div>
-
-			<ul
-				class="am-avg-sm-1 am-avg-md-2 am-margin am-padding am-text-center admin-content-list ">
-				<li><a href="#" class="am-text-secondary"><span
-						class="am-icon-btn am-icon-recycle"></span><br />昨日访问<br />80082</a></li>
-				<li><a href="#" class="am-text-secondary"><span
-						class="am-icon-btn am-icon-user-md"></span><br />在线用户<br />3000</a></li>
-			</ul>
-			<div class="am-cf am-padding ">
-				<div class="am-cf text-center">
-					<strong>访问日志(fake)</strong>
-				</div>
-			</div>
-			<hr>
-			<div class="am-g">
-				<div class="am-u-sm-12">
-					<table
-						class="am-table am-table-bd am-table-striped admin-content-table">
-						<thead>
-							<tr>
-								<th>序号</th>
-								<th>用户名</th>
-								<th>最近访问地址</th>
-								<th>最近访问时间</th>
-								<th>管理</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>John Clark</td>
-								<td><a href="#">http://www.baidu.com</a></td>
-								<td>2015-10-23 23:12:23</td>
-								<td>
-									<div class="am-dropdown" data-am-dropdown>
-										<a href="#">删除</a>
-										</li>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		<!-- content end -->
-
-	</div>
-
-	<a href="#" class="am-show-sm-only admin-menu"
-		data-am-offcanvas="{target: '#admin-offcanvas'}"> <span
-		class="am-icon-btn am-icon-th-list"></span>
-	</a>
-
-	<footer>
-		<hr>
-		<p class="am-padding-left am-footer">
-			<small>Powered by AmazeUI <br> © 2015 Dbyz.
-			</small>
-		</p>
-	</footer>
+		<iframe src="${pageContext.request.contextPath}/sys/home" width="70%" height="100%">
+		</iframe>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/common/jquery/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript"

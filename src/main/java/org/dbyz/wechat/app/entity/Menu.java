@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 菜单实体类
  *
  * @ClassName: Menu
- * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+ * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
  * @version: V1.0
  * 
  *           1、自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。
@@ -42,7 +42,7 @@ public class Menu {
 	 * 一级菜单实体类
 	 *
 	 * @ClassName: Button
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public static class Button {
@@ -161,7 +161,7 @@ public class Menu {
 	 * 菜单类型
 	 *
 	 * @ClassName: MenuType
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public static enum MenuType {

@@ -4,7 +4,7 @@ package org.dbyz.wechat.app.entity;
  * 模版消息实体类
  *
  * @ClassName: TemplateMsg
- * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+ * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
  * @version: V1.0
  */
 public class TemplateMsg {
@@ -112,7 +112,7 @@ public class TemplateMsg {
 	 * 发送的数据 value-color键值对组（十组备用）
 	 *
 	 * @ClassName: Data
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public class Data {
@@ -216,7 +216,7 @@ public class TemplateMsg {
 	 * 文本和颜色的键值对
 	 *
 	 * @ClassName: ValueAndColor
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public class ValueAndColor {

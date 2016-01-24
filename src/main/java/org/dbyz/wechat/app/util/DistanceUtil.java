@@ -5,7 +5,7 @@ package org.dbyz.wechat.app.util;
  * 
  * @ClassName: DistanceUtil
  * @Description:
- * @author 作者 E-mail <a href="mailto:845927437@qq.com">方正</a>
+ * @author 作者 E-mail <a href="mailto:glxydbyz@gmail.com">方正</a>
  * @version 创建时间：2015
  */
 public class DistanceUtil {

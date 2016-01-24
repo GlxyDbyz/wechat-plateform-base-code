@@ -10,7 +10,7 @@ import org.dbyz.wechat.app.entity.User;
  * 用户相关DAO
  *
  * @ClassName: UserDao
- * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+ * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
  * @version: V1.0
  */
 public interface UserDao {

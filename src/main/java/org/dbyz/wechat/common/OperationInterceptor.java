@@ -19,7 +19,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * 
  * @ClassName: OperationInterceptor
  * @Description:
- * @author 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+ * @author 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
  * @version 创建时间：2014年12月11日下午5:38:52
  */
 public class OperationInterceptor extends HandlerInterceptorAdapter {

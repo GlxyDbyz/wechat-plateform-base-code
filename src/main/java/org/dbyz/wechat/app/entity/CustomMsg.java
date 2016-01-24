@@ -4,7 +4,7 @@ package org.dbyz.wechat.app.entity;
  * 客服消息
  *
  * @ClassName: CustomMsg
- * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+ * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
  * @version: V1.0
  */
 public class CustomMsg {
@@ -102,7 +102,7 @@ public class CustomMsg {
 	 * 客服消息-文本消息
 	 *
 	 * @ClassName: text
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public static class text {
@@ -126,7 +126,7 @@ public class CustomMsg {
 	 * 客服消息-图片消息
 	 *
 	 * @ClassName: image
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public static class image {
@@ -151,7 +151,7 @@ public class CustomMsg {
 	 * 客服消息-语音消息
 	 *
 	 * @ClassName: voice
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public static class voice {
@@ -176,7 +176,7 @@ public class CustomMsg {
 	 * 客服消息-视频消息
 	 *
 	 * @ClassName: video
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public static class video {
@@ -232,7 +232,7 @@ public class CustomMsg {
 	 * 客服消息-音乐消息
 	 *
 	 * @ClassName: music
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public static class music {
@@ -297,7 +297,7 @@ public class CustomMsg {
 	 * 客服消息-图文消息
 	 *
 	 * @ClassName: news
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public static class news {
@@ -325,7 +325,7 @@ public class CustomMsg {
 	 * 单条图文
 	 *
 	 * @ClassName: article
-	 * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+	 * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
 	 * @version: V1.0
 	 */
 	public static class article {

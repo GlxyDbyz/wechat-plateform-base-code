@@ -196,6 +196,50 @@ public class AppUtilTest {
 	}
 	
 	@Test
+	public void testCreateMenu4() {
+		
+		/**
+		 * 菜单1
+		 */
+		Button b1s1 = new Button("微信绑定",MenuType.click, "user_bind", null, null);
+		Button b1s2 = new Button("模版消息",MenuType.click, "sent_template", null, null);;
+		Button b1s3 = new Button("客服文本信息",MenuType.click, "sent_custom_text", null, null);
+		Button b1s4 = new Button("客服图文信息",MenuType.click, "sent_custom_article", null, null);
+		Button[] subButton1 = {b1s1,b1s2,b1s3,b1s4};
+		Button b1 = new Button("消息",subButton1);
+
+		/**
+		 * 菜单2
+		 */
+		Button b2s1 = new Button("系统拍照",MenuType.pic_sysphoto, "pic_sysphoto", null, null);
+		Button b2s2 = new Button("拍照或相册",MenuType.pic_photo_or_album, "pic_photo_or_album", null, null);
+		Button b2s3 = new Button("微信相册",MenuType.pic_weixin, "pic_weixin", null, null);
+		Button[] subButton2 = {b2s1,b2s2,b2s3};
+		Button b2 = new Button("发图",subButton2);
+		
+		/**
+		 * 菜单3
+		 */
+		Button b3s1 = new Button("百度",MenuType.view, null, "http://www.baidu.com", null);
+		Button b3s2 = new Button("腾讯",MenuType.view, null, "http://www.qq.com", null);
+		Button b3s3 = new Button("新浪",MenuType.view, null, "http://www.sina.com", null);
+		Button[] subButton3 = {b3s1,b3s2,b3s3};
+		Button b3 = new Button("外链",subButton3);
+		
+		/**
+		 * 一级菜单数组
+		 */
+		Button[] button = {b1,b2,b3};
+		
+		/**
+		 * 整个menu
+		 */
+		Menu menu = new Menu(button);
+		
+		AppUtil.createMenu(menu);
+	}
+	
+	@Test
 	public void testgetMenu() {
 		System.out.println(AppUtil.getMenu());
 	}

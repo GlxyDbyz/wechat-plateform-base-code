@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 用户发来的的请求消息类
  *
  * @ClassName: Request
- * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+ * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
  * @version: V1.0
  */
 

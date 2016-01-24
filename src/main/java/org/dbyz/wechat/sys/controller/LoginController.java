@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 系统登录控制
  *
  * @ClassName: LoginController
- * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+ * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
  * @version: V1.0
  */
 @Controller
@@ -45,11 +45,11 @@ public class LoginController {
 
 	@RequestMapping("/index")
 	public String index(HttpServletRequest req, SysUser user) {
-		HttpSession session = req.getSession(false);
-		if (session.getAttribute(SYS_SESSION_USER) != null) {
-			return "sys/sys-index";
-		} else {
-			return "redirect:/index.jsp";
-		}
+		return "sys/sys-index";
+	}
+	
+	@RequestMapping("/home")
+	public String home(HttpServletRequest req, SysUser user) {
+		return "sys/sys-home";
 	}
 }

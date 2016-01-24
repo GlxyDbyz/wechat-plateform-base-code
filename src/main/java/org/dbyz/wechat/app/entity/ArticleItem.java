@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 单条图文消息
  *
  * @ClassName: ArticleItem
- * @author: 作者 E-mail <a href="mailto:845927437@qq.com">Dbyz</a>
+ * @author: 作者 E-mail <a href="mailto:glxydbyz@gmail.com">Dbyz</a>
  * @version: V1.0
  */
 
