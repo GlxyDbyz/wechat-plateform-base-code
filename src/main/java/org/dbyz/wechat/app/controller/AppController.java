@@ -7,7 +7,6 @@ import static org.dbyz.wechat.app.util.JaxbUtil.xml2Bean;
 import static org.dbyz.wechat.app.util.ScheduledThreadPoolUtil.execute;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,6 +26,7 @@ import org.dbyz.wechat.app.entity.ResponseMsg;
 import org.dbyz.wechat.app.entity.User;
 import org.dbyz.wechat.app.service.AppService;
 import org.dbyz.wechat.app.service.UserService;
+import org.dbyz.wechat.common.utils.AjaxUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -42,7 +42,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class AppController {
-	private Logger log = LoggerFactory.getLogger(AppController.class);
+	private Logger logger = LoggerFactory.getLogger(AppController.class);
 
 	private static final String TOKEN = getString("weixinToken");
 
@@ -77,7 +77,7 @@ public class AppController {
 		// 读取微信发来的消息
 		final RequestMsg request = getRequestMsg(req);
 		// 生成并发送回复消息
-		responseText(resp, generateResponseXml(request));
+		AjaxUtil.sendText(resp, generateResponseXml(request));
 	}
 
 	/**
@@ -90,8 +90,9 @@ public class AppController {
 	 * @since V1.0
 	 */
 	private String generateResponseXml(final RequestMsg request) {
-		if (request == null)
+		if (request == null){
 			return null;
+		}
 
 		// 用 request 作为 response 基础数据
 		ResponseMsg response = new ResponseMsg(request);
@@ -126,6 +127,7 @@ public class AppController {
 		// 取消关注公众号
 		if (EventType.UNSUBSCRIBE.getEvent().equals(request.getEvent())) {
 			userService.unBind(openId);
+			return null;
 		}
 
 		// 点击的是用户绑定click("user_bind")
@@ -274,30 +276,8 @@ public class AppController {
 		}
 		String encrypt = shaHex(encryptStr);
 		if (encrypt.equals(request.getParameter("signature"))) {
-			log.debug("weixin URL is validate");
-			responseText(response, request.getParameter("echostr"));
-		}
-	}
-
-	/**
-	 * 返回数据给微信以验证URL
-	 * 
-	 * @Title: response
-	 * @Description:
-	 * @param @param response
-	 * @param @param respText
-	 * @return void
-	 */
-	public void responseText(HttpServletResponse response, String respText) {
-		PrintWriter out;
-		response.setCharacterEncoding("utf-8");
-		try {
-			out = response.getWriter();
-			out.print(respText);
-			out.flush();
-			out.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+			logger.debug("weixin URL is validate");
+			AjaxUtil.sendText(response, request.getParameter("echostr"));
 		}
 	}
 }
