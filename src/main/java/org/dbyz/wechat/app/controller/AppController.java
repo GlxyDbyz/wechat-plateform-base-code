@@ -142,11 +142,9 @@ public class AppController {
 			replyText = "模版消息正在发送，请稍候!";
 			execute(new Runnable() {
 				public void run() {
-					appService.sentTemplateMsgDemo(request);
+					appService.sendTemplateMsgDemo(request);
 				}
 			},1L);
-
-			new Thread().start();
 		}
 
 		// 点击的是发送客服文本消息click("sent_custom_text")
@@ -154,7 +152,7 @@ public class AppController {
 			replyText = "客服（文本）消息正在发送，请稍候!";
 			execute(new Runnable() {
 				public void run() {
-					appService.sentCustomeTextMsgDemo(request);
+					appService.sendCustomeTextMsgDemo(request);
 				}
 			},1L);
 		}
@@ -164,7 +162,7 @@ public class AppController {
 			replyText = "客服（图文）消息正在发送，请稍候!";
 			execute(new Runnable() {
 				public void run() {
-					appService.sentCustomeArticleMsgDemo(request);
+					appService.sendCustomeArticleMsgDemo(request);
 				}
 			},1L);
 		}

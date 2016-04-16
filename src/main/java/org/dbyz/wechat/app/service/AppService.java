@@ -58,7 +58,7 @@ public class AppService {
 	 * @return: void
 	 * @since V1.0
 	 */
-	public void sentTemplateMsgDemo(RequestMsg requestMsg) {
+	public void sendTemplateMsgDemo(RequestMsg requestMsg) {
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		ValueAndColor first = TemplateMsg.createValueAndColor("这是一条演示模版消息", "#40F00F");
 		ValueAndColor second = TemplateMsg.createValueAndColor( sf.format(new Date()), "#40F00F");
@@ -68,30 +68,50 @@ public class AppService {
 		data.setSecond(second);
 		data.setThird(third);
 
-		TemplateMsg t = new TemplateMsg(requestMsg.getFromUserName(),
+		TemplateMsg t = new TemplateMsg(
+				requestMsg.getFromUserName(),
 				"ujoSpZTTSd_smfBt1Bv0TUw4znLFRDK6y2elsCrzCSI",
-				"http://mp.weixin.qq.com/wiki/17/304c1885ea66dbedf7dc170d84999a9d.html", data);
+				"http://mp.weixin.qq.com/wiki/17/304c1885ea66dbedf7dc170d84999a9d.html", 
+				data);
 		AppUtil.sendTemplateMsg(t);
 	}
 	
-	public void sentCustomeTextMsgDemo(RequestMsg requestMsg) {
+	/**
+	 * 发送客服文本消息
+	 * 
+	 * @Title: sendCustomeTextMsgDemo
+	 * @param @param requestMsg    
+	 * @return: void
+	 * @since V1.0
+	 */
+	public void sendCustomeTextMsgDemo(RequestMsg requestMsg) {
 		CustomMsg msg = new CustomMsg(requestMsg.getFromUserName(),
 				CustomMsgType.TEXT.getMsgtype());
 		msg.setText(new text("您好，欢迎关注我的微信公众平台测试号，这是一条客服消息!"));
 		AppUtil.sendCustomerMsg(msg);
 	}
-	public void sentCustomeArticleMsgDemo(RequestMsg requestMsg) {
+	
+	/**
+	 * 发送客服图文消息
+	 * 
+	 * @Title: sendCustomeArticleMsgDemo
+	 * @param @param requestMsg    
+	 * @return: void
+	 * @since V1.0
+	 */
+	public void sendCustomeArticleMsgDemo(RequestMsg requestMsg) {
 		CustomMsg msg = new CustomMsg(requestMsg.getFromUserName(),
 				CustomMsgType.NEWS.getMsgtype());
 		CustomMsg.article[] articles = {
 				new article(
 						"您好，欢迎关注我的微信公众平台测试号",
-						"http://mp.weixin.qq.com/wiki/1/70a29afed17f56d537c833f89be979c9.html",
-						"http://mp.weixin.qq.com/wiki/static/assets/ac9be2eafdeb95d50b28fa7cd75bb499.png"),
+						"http://mp.weixin.qq.com/wiki/static/assets/ac9be2eafdeb95d50b28fa7cd75bb499.png",
+						"http://mp.weixin.qq.com/wiki/1/70a29afed17f56d537c833f89be979c9.html"),
 				new article(
 						"这是一条客服（图文）消息",
-						"http://mp.weixin.qq.com/wiki/1/70a29afed17f56d537c833f89be979c9.html",
-						"http://mp.weixin.qq.com/wiki/static/assets/ac9be2eafdeb95d50b28fa7cd75bb499.png") };
+						"http://mp.weixin.qq.com/wiki/static/assets/ac9be2eafdeb95d50b28fa7cd75bb499.png", 
+						"http://mp.weixin.qq.com/wiki/1/70a29afed17f56d537c833f89be979c9.html")
+				};
 		CustomMsg.news news = new news(articles);
 		msg.setNews(news);
 		AppUtil.sendCustomerMsg(msg);

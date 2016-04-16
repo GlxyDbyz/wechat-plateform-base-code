@@ -342,11 +342,11 @@ public class CustomMsg {
 		 */
 		private String url;
 
-		public article(String title, String url, String picurl) {
+		public article(String title,String picurl,String url) {
 			super();
 			this.title = title;
-			this.url = url;
 			this.picurl = picurl;
+			this.url = url;
 		}
 
 		public String getTitle() {
