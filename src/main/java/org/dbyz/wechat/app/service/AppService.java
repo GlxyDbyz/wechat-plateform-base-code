@@ -17,8 +17,10 @@ import org.dbyz.wechat.app.entity.TemplateMsg.Data;
 import org.dbyz.wechat.app.entity.TemplateMsg.ValueAndColor;
 import org.dbyz.wechat.app.util.AppUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class AppService {
 
 	@Resource

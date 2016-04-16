@@ -12,8 +12,11 @@ import org.dbyz.wechat.app.dao.UserDao;
 import org.dbyz.wechat.app.entity.PlateformUserInfo;
 import org.dbyz.wechat.app.entity.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 @Service
+@Transactional
 public class UserService {
 
 	@Resource
@@ -57,9 +60,11 @@ public class UserService {
 	public Integer unBind(String openId) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("openId", openId);
-		PlateformUserInfo userInfoDb = userDao.getPlateformUserInfoList(param)
-				.get(0);
-
+		List<PlateformUserInfo> userInfosDb = userDao.getPlateformUserInfoList(param);
+		if(CollectionUtils.isEmpty(userInfosDb)){
+			return 0;
+		}
+		PlateformUserInfo userInfoDb = userInfosDb.get(0);
 		userInfoDb.setSubscribe(0);
 		userDao.updatePlateformUserInfo(userInfoDb);
 
@@ -84,7 +89,7 @@ public class UserService {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("openId", openId);
 		List<PlateformUserInfo> list = userDao.getPlateformUserInfoList(param);
-		if (list == null || list.size() == 0) {
+		if (CollectionUtils.isEmpty(list)) {
 			userDao.savePlateformUserInfo(userInfo);
 		} else if (list != null && list.size() == 1) {
 			userDao.updatePlateformUserInfo(userInfo);

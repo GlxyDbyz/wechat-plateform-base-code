@@ -26,52 +26,26 @@
 	
 	<insert id="savePlateformUserInfo" parameterType="org.dbyz.wechat.app.entity.PlateformUserInfo">
 		INSERT INTO wx_plateform_user_info
-	            (subscribe,
-	             nickName,
-	             openId,
-	             sex,
-	             language,
-	             city,
-	             province,
-	             country,
-	             headImgUrl,
-	             subscribeTime,
-	             unionId,
-	             remark,
-	             groupId,
-	             infoGetTime)
-		VALUES (#{subscribe},
-				#{nickname},
-				#{openid},
-				#{sex},
-				#{language},
-				#{city},
-				#{province},
-				#{country},
-				#{headimgurl},
-				#{subscribe_time},
-				#{unionid},
-				#{remark},
-				#{groupid},
-				 now());
+	           (subscribe,   nickName,   openId,   sex,   language,   city,   province,   country,   headImgUrl,   subscribeTime,    unionId,   remark,   groupId,   infoGetTime)
+		VALUES (#{subscribe},#{nickname},#{openid},#{sex},#{language},#{city},#{province},#{country},#{headimgurl},#{subscribe_time},#{unionid},#{remark},#{groupid},now());
 	</insert>
 	
 	<update id="updatePlateformUserInfo" parameterType="org.dbyz.wechat.app.entity.PlateformUserInfo">
 		UPDATE wx_plateform_user_info
-			SET subscribe = #{subscribe},
-			  	nickName = #{nickname},
-			  	sex = #{sex},
-			  	language = #{language},
-			  	city = #{city},
-			  	province = #{province},
-			  	country = #{country},
-			  	headImgUrl = #{headimgurl},
+			SET subscribe   = #{subscribe},
+			  	nickName    = #{nickname},
+			  	sex         = #{sex},
+			  	language    = #{language},
+			  	city        = #{city},
+			  	province    = #{province},
+			  	country     = #{country},
+			  	headImgUrl  = #{headimgurl},
 			  	subscribeTime = #{subscribe_time},
-			  	unionId = #{unionid},
-			  	remark = #{remark},
-			  	groupId = #{groupid},
+			  	unionId     = #{unionid},
+			  	remark      = #{remark},
+			  	groupId     = #{groupid},
 			  	infoGetTime = now()
-		 WHERE openId = #{openid};
+		 WHERE openId       = #{openid};
 	</update>
 	
 	<select id="getPlateformUserInfoList" parameterType="java.util.Map" resultType="org.dbyz.wechat.app.entity.PlateformUserInfo">
