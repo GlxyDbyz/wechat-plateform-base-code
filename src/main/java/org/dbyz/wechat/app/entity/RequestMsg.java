@@ -86,7 +86,7 @@ public class RequestMsg {
 	private String thumbMediaId;
 	// MediaId
 
-	// -----------5.地理位置---------------------------------------
+	// -----------5.地理位置消息---------------------------------------
 	/**
 	 * 纬度
 	 */
@@ -129,7 +129,7 @@ public class RequestMsg {
 	/**
 	 * 事件名称
 	 * 
-	 * @see EventType
+	 * @see RequestEventType
 	 */
 	@XmlElement(name = "Event", required = false)
 	private String event;
@@ -428,31 +428,35 @@ public class RequestMsg {
 		/**
 		 * 文本消息
 		 */
-		text("text"),
+		TEXT("text"),
 		/**
 		 * 图片消息
 		 */
-		image("image"),
+		IMAGE("image"),
 		/**
 		 * 语音消息
 		 */
-		voice("voice"),
+		VOICE("voice"),
 		/**
 		 * 视频消息
 		 */
-		video("video"),
+		VIDEO("video"),
 		/**
 		 * 小视频消息
 		 */
-		shortvideo("shortvideo"),
+		SHORTVIDEO("shortvideo"),
 		/**
 		 * 地理位置消息
 		 */
-		location("location"),
+		LOCATION("location"),
 		/**
-		 * 时间推送消息
+		 * 链接消息
 		 */
-		event("event");
+		LINK("link"),
+		/**
+		 * 事件推送消息
+		 */
+		EVENT("event");
 
 		/**
 		 * 消息类型名称
@@ -468,7 +472,7 @@ public class RequestMsg {
 		}
 	}
 
-	public static enum EventType {
+	public static enum RequestEventType {
 		/**
 		 * 关注事件
 		 */
@@ -515,7 +519,7 @@ public class RequestMsg {
 		TEMPLATESENDJOBFINISH("TEMPLATESENDJOBFINISH"), ;
 		private String name;
 
-		private EventType(String name) {
+		private RequestEventType(String name) {
 			this.name = name;
 		}
 
