@@ -31,6 +31,7 @@ import org.dbyz.wechat.common.utils.AjaxUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -114,7 +115,7 @@ public class AppController {
 		}
 		
 		if(RequestMsgType.IMAGE.getName().equals(msgType)){
-			replyText = "你好,你的照片已经收到!";
+			replyText = "暂时不支持图片消息!";
 		}
 		
 		if(RequestMsgType.LOCATION.getName().equals(msgType)){
@@ -130,13 +131,16 @@ public class AppController {
 		}
 		
 		if(RequestMsgType.VIDEO.getName().equals(msgType)){
-			replyText = "视频消息已经收到!";
+			replyText = "暂时不支持视频消息!";
 		}
 		
 		if(RequestMsgType.SHORTVIDEO.getName().equals(msgType)){
-			replyText = "短视频消息已经收到!";
+			replyText = "暂时不支持短视频消息!";
 		}
 		
+		if(StringUtils.isEmpty(replyText)){
+			return null;
+		}
 		response.setMsgType("text");
 		response.setContent(replyText);
 		String responseXml = null;
@@ -166,6 +170,11 @@ public class AppController {
 		if (RequestEventType.UNSUBSCRIBE.getEvent().equals(request.getEvent())) {
 			userService.unBind(openId);
 			return null;
+		}
+		
+		// 上报地理位置
+		if (RequestEventType.LOCATION.getEvent().equals(request.getEvent())) {
+			replyText = "地理位置已经上报!";
 		}
 		
 		// 点击事件
@@ -216,6 +225,21 @@ public class AppController {
 				replyText += string+"\r\n";
 			}
 			replyText = replyText.replace("qrcode", "二维码:").replace("barcode", "条形码:");
+		}
+		
+		// 微信模版消息发送回调
+		if (RequestEventType.TEMPLATESENDJOBFINISH.getEvent().equals(request.getEvent())) {
+			if("success".equals(request.getStatus())){
+				// 模版消息接收成功回调
+				logger.debug(request.getFromUserName() + " 模版消息接收成功");
+			}else
+			if("failed:user block".equals(request.getStatus())){
+				// 模版消息接收失败回调
+				logger.debug(request.getFromUserName()+ " 用户屏蔽了消息");
+			}else{
+				logger.debug(request.getFromUserName() + " 模版消息接收失败");
+			}
+			return null;
 		}
 		
 		return replyText;

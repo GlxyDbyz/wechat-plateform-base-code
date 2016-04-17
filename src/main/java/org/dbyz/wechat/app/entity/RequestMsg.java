@@ -516,7 +516,8 @@ public class RequestMsg {
 		/**
 		 * 模版消息发送成功（接受是否成功不区分,Status进行区分）
 		 */
-		TEMPLATESENDJOBFINISH("TEMPLATESENDJOBFINISH"), ;
+		TEMPLATESENDJOBFINISH("TEMPLATESENDJOBFINISH"), 
+		;
 		private String name;
 
 		private RequestEventType(String name) {
