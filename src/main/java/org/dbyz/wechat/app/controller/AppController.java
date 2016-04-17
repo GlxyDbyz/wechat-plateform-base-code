@@ -21,7 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 
 import org.dbyz.wechat.app.entity.RequestMsg;
-import org.dbyz.wechat.app.entity.RequestMsg.EventType;
+import org.dbyz.wechat.app.entity.RequestMsg.RequestEventType;
+import org.dbyz.wechat.app.entity.RequestMsg.RequestMsgType;
 import org.dbyz.wechat.app.entity.ResponseMsg;
 import org.dbyz.wechat.app.entity.User;
 import org.dbyz.wechat.app.service.AppService;
@@ -93,82 +94,49 @@ public class AppController {
 		if (request == null){
 			return null;
 		}
-
+		
 		// 用 request 作为 response 基础数据
 		ResponseMsg response = new ResponseMsg(request);
+		
 		// 回复消息（全部为文本消息）
 		String replyText = "";
 		String openId = request.getFromUserName();
 		User user = userService.getByOpenId(openId);
-
-		// 已经绑定
-		if (user != null) {
-			replyText = "请使用菜单功能，无需回复消息。谢谢合作！";
+		
+		String msgType = request.getMsgType();
+		
+		if(RequestMsgType.TEXT.getName().equals(msgType)){
+			replyText = textRequest(request,user);				
 		}
-
-		// 没有绑定
-		if (user == null) {
-			// 文本消息 进行处理
-			if (request.getMsgType().equals("text")) {
-				replyText = textRequest(request);
-			}
+		
+		if(RequestMsgType.EVENT.getName().equals(msgType)){
+			replyText = eventRequest(request, replyText, openId, user);
 		}
-
-		// 第一次关注公众号
-		if (EventType.SUBSCRIBE.getEvent().equals(request.getEvent())) {
-			replyText = "感谢您关注Dbyz的测试公众号^_^,详细功能请使用菜单！";
-			execute(new Runnable() {
-				public void run() {
-					userService.saveOrUpdatePlateformUserInfo(request.getFromUserName());
-				}
-			});
+		
+		if(RequestMsgType.IMAGE.getName().equals(msgType)){
+			replyText = "你好,你的照片已经收到!";
 		}
-
-		// 取消关注公众号
-		if (EventType.UNSUBSCRIBE.getEvent().equals(request.getEvent())) {
-			userService.unBind(openId);
-			return null;
+		
+		if(RequestMsgType.LOCATION.getName().equals(msgType)){
+			replyText = "地理位置已经确认:"+request.getLabel()+", 经度:"+request.getLocation_Y()+", 纬度:"+request.getLocation_X();
 		}
-
-		// 点击的是用户绑定click("user_bind")
-		if ("user_bind".equals(request.getEventKey())) {
-			replyText = "回复：姓名@手机号 ，进行员工绑定，如：方大同@18888888888";
-			if (user != null) {
-				replyText = "亲爱的" + user.getName()
-						+ "，您的绑定状态正常，可以使用所有的菜单功能，如遇特殊情况，请与Dbyz联系，谢谢合作。";
-			}
+		
+		if(RequestMsgType.LINK.getName().equals(msgType)){
+			replyText = "已收到标题为:'"+request.getTitle()+"'的链接消息";
 		}
-
-		// 点击的是发送模版消息click("sent_template")
-		if ("sent_template".equals(request.getEventKey())) {
-			replyText = "模版消息正在发送，请稍候!";
-			execute(new Runnable() {
-				public void run() {
-					appService.sendTemplateMsgDemo(request);
-				}
-			},1L);
+		
+		if(RequestMsgType.VOICE.getName().equals(msgType)){
+			replyText = "收到的消息为:"+request.getRecognition();
 		}
-
-		// 点击的是发送客服文本消息click("sent_custom_text")
-		if ("sent_custom_text".equals(request.getEventKey())) {
-			replyText = "客服（文本）消息正在发送，请稍候!";
-			execute(new Runnable() {
-				public void run() {
-					appService.sendCustomeTextMsgDemo(request);
-				}
-			},1L);
+		
+		if(RequestMsgType.VIDEO.getName().equals(msgType)){
+			replyText = "视频消息已经收到!";
 		}
-
-		// 点击的是发送客服图文消息click("sent_custom_article")
-		if ("sent_custom_article".equals(request.getEventKey())) {
-			replyText = "客服（图文）消息正在发送，请稍候!";
-			execute(new Runnable() {
-				public void run() {
-					appService.sendCustomeArticleMsgDemo(request);
-				}
-			},1L);
+		
+		if(RequestMsgType.SHORTVIDEO.getName().equals(msgType)){
+			replyText = "短视频消息已经收到!";
 		}
-
+		
 		response.setMsgType("text");
 		response.setContent(replyText);
 		String responseXml = null;
@@ -183,7 +151,80 @@ public class AppController {
 		return responseXml;
 	}
 
-	private String textRequest(RequestMsg request) {
+	private String eventRequest(final RequestMsg request, String replyText,String openId, User user) {
+		// 第一次关注公众号
+		if (RequestEventType.SUBSCRIBE.getEvent().equals(request.getEvent())) {
+			replyText = "感谢您关注Dbyz的测试公众号^_^,详细功能请使用菜单！";
+			execute(new Runnable() {
+				public void run() {
+					userService.saveOrUpdatePlateformUserInfo(request.getFromUserName());
+				}
+			});
+		}
+
+		// 取消关注公众号
+		if (RequestEventType.UNSUBSCRIBE.getEvent().equals(request.getEvent())) {
+			userService.unBind(openId);
+			return null;
+		}
+		
+		// 点击事件
+		if (RequestEventType.CLICK.getEvent().equals(request.getEvent())) {
+			// 点击的是用户绑定click("user_bind")
+			if ("user_bind".equals(request.getEventKey())) {
+				replyText = "回复：姓名@手机号 ，进行员工绑定，如：方大同@18888888888";
+				if (user != null) {
+					replyText = "亲爱的" + user.getName()
+							+ "，您的绑定状态正常，可以使用所有的菜单功能，如遇特殊情况，请与Dbyz联系，谢谢合作。";
+				}
+			}
+			
+			// 点击的是发送模版消息click("sent_template")
+			if ("sent_template".equals(request.getEventKey())) {
+				replyText = "模版消息正在发送，请稍候!";
+				execute(new Runnable() {
+					public void run() {
+						appService.sendTemplateMsgDemo(request);
+					}
+				},1L);
+			}
+	
+			// 点击的是发送客服文本消息click("sent_custom_text")
+			if ("sent_custom_text".equals(request.getEventKey())) {
+				replyText = "客服（文本）消息正在发送，请稍候!";
+				execute(new Runnable() {
+					public void run() {
+						appService.sendCustomeTextMsgDemo(request);
+					}
+				},1L);
+			}
+	
+			// 点击的是发送客服图文消息click("sent_custom_article")
+			if ("sent_custom_article".equals(request.getEventKey())) {
+				replyText = "客服（图文）消息正在发送，请稍候!";
+				execute(new Runnable() {
+					public void run() {
+						appService.sendCustomeArticleMsgDemo(request);
+					}
+				},1L);
+			}
+		}
+		
+		if (RequestEventType.SCAN.getEvent().equals(request.getEvent()) || RequestEventType.SCANCODE_PUSH.getEvent().equals(request.getEvent()) || RequestEventType.SCANCODE_WAITMSG.getEvent().equals(request.getEvent())) {
+			ArrayList<String> scanCodeInfos = request.getScanCodeInfo();
+			for (String string : scanCodeInfos) {
+				replyText += string+"\r\n";
+			}
+			replyText = replyText.replace("qrcode", "二维码:").replace("barcode", "条形码:");
+		}
+		
+		return replyText;
+	}
+
+	private String textRequest(final RequestMsg request,User user) {
+		if(user!=null){
+			return "请使用菜单功能，无需回复消息。谢谢合作！";
+		}
 		String replyText;
 		String content = request.getContent();
 
@@ -221,14 +262,11 @@ public class AppController {
 	 */
 	private RequestMsg getRequestMsg(HttpServletRequest request) {
 		RequestMsg requestMsg = null;
-
 		// 1、设置0.5M的缓冲区域（普通的消息足够了,可适当放大如1M，考虑服务器的配置）
 		byte[] buffer = new byte[1024 * 512];
 		ServletInputStream is;
 		try {
-
 			is = request.getInputStream();
-
 			if (is != null) {
 				// 2、读取数据到缓冲区
 				int length = is.read(buffer);
@@ -240,7 +278,6 @@ public class AppController {
 					requestMsg = xml2Bean(requestXml, RequestMsg.class);
 				}
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {
