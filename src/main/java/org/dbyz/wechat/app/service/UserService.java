@@ -93,7 +93,7 @@ public class UserService {
 			userDao.savePlateformUserInfo(userInfo);
 		} else if (list != null && list.size() == 1) {
 			userDao.updatePlateformUserInfo(userInfo);
-		} else if (list.size() > 1) {
+		} else if (list != null && list.size() > 1) {
 			userDao.deletePlateformUserInfo(param);
 			userDao.savePlateformUserInfo(userInfo);
 		}
